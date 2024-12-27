@@ -15,16 +15,22 @@ private class Node(value : Int = -1) {
 
 class BinarySearchTree {
 
-    private var root : Node;
+    private var root : Node?;
 
     init {
 
-        this.root = Node();
+        this.root = null;
     }
 
     fun insert(value : Int) : Boolean {
 
         var newNode : Node? = Node(value);
+
+        if (this.root == null)
+        {
+            this.root = newNode;
+            return true;
+        }
 
         var stack : ArrayDeque<Node?> = ArrayDeque<Node?>();
 
@@ -70,18 +76,42 @@ class BinarySearchTree {
         return false;
     }
 
+    private fun _printTreeRecursive(root : Node?) {
+
+        if (root == null)
+        {
+            return;
+        }
+
+        this._printTreeRecursive(root.left);
+
+        println("value = ${root.value}");
+
+        this._printTreeRecursive(root.right);
+    }
+
+    fun printTreeRecursive() {
+
+        this._printTreeRecursive(this.root);
+    }
+
     fun printTree() {
+
+        if (this.root == null)
+        {
+            return;
+        }
 
         var stack : ArrayDeque<Node?> = ArrayDeque<Node?>();
 
-        if (this.root.left != null)
+        if (this.root?.left != null)
         {
-            stack.addLast(this.root.left);
+            stack.addLast(this.root?.left);
         }
 
-        if (this.root.right != null)
+        if (this.root?.right != null)
         {
-            stack.addLast(this.root.right);
+            stack.addLast(this.root?.right);
         }
 
         while (!stack.isEmpty())
