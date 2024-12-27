@@ -97,38 +97,6 @@ class BinarySearchTree {
 
     fun printTree() {
 
-        if (this.root == null)
-        {
-            return;
-        }
-
-        var stack : ArrayDeque<Node?> = ArrayDeque<Node?>();
-
-        if (this.root?.left != null)
-        {
-            stack.addLast(this.root?.left);
-        }
-
-        if (this.root?.right != null)
-        {
-            stack.addLast(this.root?.right);
-        }
-
-        while (!stack.isEmpty())
-        {
-            var node = stack.removeLast();
-
-            println("value = ${node?.value}");
-
-            if (node?.left != null)
-            {
-                stack.addLast(node.left);
-            }
-
-            if (node?.right != null)
-            {
-                stack.addLast(node.right);
-            }
-        }
+        println("TODO: implement this using an interative method");
     }
 }
