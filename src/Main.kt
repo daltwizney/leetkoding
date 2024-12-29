@@ -1,6 +1,7 @@
-import BSTTests
+import com.wizneylabs.leetcoding.exercises.HashTableLeetcode
 
 fun main() {
 
-    (BSTTests()).run();
+//    (BSTTests()).run();
+    (HashTableLeetcode()).testItemInCommon();
 }
