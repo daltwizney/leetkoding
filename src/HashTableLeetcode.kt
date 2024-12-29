@@ -2,7 +2,58 @@ package com.wizneylabs.leetcoding.exercises
 
 class HashTableLeetcode {
 
-    /* hashtable leetcode exercise */
+    /**
+     *  find duplicates
+     */
+
+    fun findDuplicates(items : ArrayList<Int>) : ArrayList<Int> {
+
+        val itemsSeen : HashMap<Int, Int> = HashMap<Int, Int>();
+
+        val duplicates : ArrayList<Int> = ArrayList<Int>();
+
+        for (i in 0..items.size - 1)
+        {
+            val item = items[i];
+
+            if (itemsSeen.containsKey(item))
+            {
+                val count : Int? = itemsSeen[item];
+
+                if (count != null)
+                {
+                    itemsSeen[item] = count + 1;
+
+                    if (itemsSeen[item] == 2)
+                    {
+                        duplicates.add(item);
+                    }
+                }
+            }
+            else
+            {
+                itemsSeen[item] = 1;
+            }
+        }
+
+        return duplicates;
+    }
+
+    fun testFindDuplicates() {
+
+        val items = arrayListOf<Int>(0, 42, 1, 2, 3, 4, 5, 6, 2, 3, 42, 6, 54);
+
+        val duplicates = findDuplicates(items);
+
+        for (i in 0..duplicates.size - 1)
+        {
+            println("duplicate = ${duplicates[i]}");
+        }
+    }
+
+    /**
+     *  find if items in common exist
+     */
     fun itemInCommon(list1 : ArrayList<Int>, list2 : ArrayList<Int>) : Boolean {
 
         val itemsSeen : HashSet<Int> = HashSet<Int>();
