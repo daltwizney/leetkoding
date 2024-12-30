@@ -3,6 +3,52 @@ package com.wizneylabs.leetcoding.exercises
 class HashTableLeetcode {
 
     /**
+     *  find first non-repeating character
+     */
+
+    fun findFirstNonRepeatingCharacter(data : String) : Char {
+
+        var characterCounts = HashMap<Char, Int>();
+
+        for (i in 0..data.length - 1)
+        {
+            val c = data[i];
+
+            if (characterCounts.containsKey(c))
+            {
+                val count = characterCounts[c] ?: 0;
+
+                characterCounts[c] = count + 1;
+            }
+            else
+            {
+                characterCounts[c] = 1;
+            }
+        }
+
+        for (i in 0..data.length - 1)
+        {
+            val c = data[i];
+
+            val count = characterCounts[c] ?: 0;
+
+            if (count < 2)
+            {
+                return c;
+            }
+        }
+
+        return '\u0000';
+    }
+
+    fun testFirstNonRepeatingCharacter() {
+
+        val data = "truetalent";
+
+        println("result = ${this.findFirstNonRepeatingCharacter(data)}");
+    }
+
+    /**
      *  find duplicates
      */
 

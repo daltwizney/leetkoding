@@ -4,5 +4,6 @@ fun main() {
 
 //    (BSTTests()).run();
 //    (HashTableLeetcode()).testItemInCommon();
-    (HashTableLeetcode()).testFindDuplicates();
+//    (HashTableLeetcode()).testFindDuplicates();
+    (HashTableLeetcode()).testFirstNonRepeatingCharacter();
 }
