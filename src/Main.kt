@@ -1,10 +1,19 @@
 import com.wizneylabs.leetcoding.exercises.HashTableLeetcode
+import com.wizneylabs.leetcoding.MaxHeap
 
 fun main() {
 
-//    (BSTTests()).run();
-//    (HashTableLeetcode()).testItemInCommon();
-//    (HashTableLeetcode()).testFindDuplicates();
-//    (HashTableLeetcode()).testFirstNonRepeatingCharacter();
-    HashTableLeetcode().testTwoSum();
+    val heap = MaxHeap();
+
+    heap.insert(2);
+
+    heap.insert(42);
+    heap.insert(54);
+
+    heap.insert(32);
+    heap.insert(23);
+    heap.insert(31);
+    heap.insert(45);
+
+    heap.print();
 }
