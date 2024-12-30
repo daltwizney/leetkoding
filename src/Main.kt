@@ -5,5 +5,6 @@ fun main() {
 //    (BSTTests()).run();
 //    (HashTableLeetcode()).testItemInCommon();
 //    (HashTableLeetcode()).testFindDuplicates();
-    (HashTableLeetcode()).testFirstNonRepeatingCharacter();
+//    (HashTableLeetcode()).testFirstNonRepeatingCharacter();
+    HashTableLeetcode().testTwoSum();
 }

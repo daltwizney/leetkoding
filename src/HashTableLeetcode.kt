@@ -3,6 +3,46 @@ package com.wizneylabs.leetcoding.exercises
 class HashTableLeetcode {
 
     /**
+     *  find two numbers in a given vector that add up to a specific target number
+     */
+
+    fun twoSum(nums : ArrayList<Int>, target : Int) : ArrayList<Int> {
+
+        var resultPair = arrayListOf(Int.MAX_VALUE, Int.MAX_VALUE);
+
+        val uniqueValues = HashSet<Int>();
+
+        for (i in 0..nums.size - 1)
+        {
+            uniqueValues.add(nums[i]);
+        }
+
+        for (i in 0..nums.size - 1)
+        {
+            val a = nums[i];
+            val b = target - a;
+
+            if (uniqueValues.contains(b))
+            {
+                resultPair[0] = a;
+                resultPair[1] = b;
+                break;
+            }
+        }
+
+        return resultPair;
+    }
+
+    fun testTwoSum() {
+
+        val nums = arrayListOf<Int>(2, 1, 3, 4, 6, 5, 7, 8, 10, 9, 0);
+
+        val pair = twoSum(nums, 19);
+
+        println("pair = (${pair[0]}, ${pair[1]})");
+    }
+
+    /**
      *  find first non-repeating character
      */
 
