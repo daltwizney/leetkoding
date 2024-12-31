@@ -10,20 +10,46 @@ class MaxHeap {
 
     fun parentIndex(childIndex : Int) : Int {
 
-        return floor((childIndex - 1) / 2.0f).toInt();
+        val index = floor((childIndex - 1) / 2.0f).toInt();
+
+        if (index < 0 || index > this.data.size - 1)
+        {
+            return Int.MIN_VALUE;
+        }
+
+        return index;
     }
 
     fun leftChildIndex(parentIndex : Int) : Int {
 
-        return (parentIndex * 2) + 1;
+        val index = (parentIndex * 2) + 1;
+
+        if (index < 0 || index > this.data.size - 1)
+        {
+            return Int.MIN_VALUE;
+        }
+
+        return index;
     }
 
     fun rightChildIndex(parentIndex : Int) : Int {
 
-        return (parentIndex * 2) + 2;
+        val index = (parentIndex * 2) + 2;
+
+        if (index < 0 || index > this.data.size - 1)
+        {
+            return Int.MIN_VALUE;
+        }
+
+        return index;
     }
 
     fun value(index : Int) : Int {
+
+        if (index < 0 || index > this.data.size - 1)
+        {
+            return Int.MIN_VALUE;
+        }
 
         return this.data[index];
     }
@@ -55,6 +81,59 @@ class MaxHeap {
             index = parentIndex;
             parentIndex = this.parentIndex(index);
         }
+    }
+
+    private fun _sinkDown(index : Int) {
+
+        val nodeValue = this.data[index];
+        var currentIndex = index;
+
+        while (true) {
+
+            var leftChild = this.leftChildIndex(currentIndex);
+            var rightChild = this.rightChildIndex(currentIndex);
+
+            var leftChildValue = this.value(leftChild);
+            var rightChildValue = this.value(rightChild);
+
+            var maxIndex = currentIndex;
+
+            if (leftChildValue > this.value(maxIndex))
+            {
+                maxIndex = leftChild;
+            }
+
+            if (rightChildValue > this.value(maxIndex))
+            {
+                maxIndex = rightChild;
+            }
+
+            if (maxIndex != currentIndex)
+            {
+                this._swap(currentIndex, maxIndex);
+                currentIndex = maxIndex;
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+
+    fun remove() : Int {
+
+        if (this.data.size == 0)
+        {
+            return Int.MIN_VALUE;
+        }
+
+        val maxValue = this.data[0];
+
+        this.data[0] = this.data.removeLast();
+
+        this._sinkDown(0); // restore heap property
+
+        return maxValue;
     }
 
     fun print() {
