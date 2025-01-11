@@ -2,59 +2,64 @@ import com.wizneylabs.leetcoding.GridRenderer
 import com.wizneylabs.leetcoding.exercises.HashTableLeetcode
 import com.wizneylabs.leetcoding.MaxHeap
 
-fun testRemove(heap : MaxHeap) {
-
-    val maxValue = heap.remove();
-
-    println("max value = ${maxValue}");
+class TreeNode(var `val` : Int) {
+    var left : TreeNode? = null;
+    var right : TreeNode? = null;
 }
 
-fun maxHeapTest() {
+class Solution {
 
-    val heap = MaxHeap();
+    var _minDepth = Int.MAX_VALUE;
 
-    heap.insert(2);
+    fun _isLeafNode(node: TreeNode?): Boolean {
 
-    heap.insert(42);
-    heap.insert(54);
+        if (node == null)
+        {
+            return false;
+        }
 
-    heap.insert(32);
-    heap.insert(23);
-    heap.insert(31);
-    heap.insert(45);
+        if (node.left != null || node.right != null)
+        {
+            return false;
+        }
 
-    testRemove(heap);
-    testRemove(heap);
-
-    heap.print();
-}
-
-fun testGridRenderer() {
-
-    val renderer = GridRenderer(15, 15);
-
-    for (i in 1..15 - 2) {
-
-        renderer.setCellColor(1, i, GridRenderer.BG_WHITE);
+        return true;
     }
 
-    for (i in 2..15 - 2) {
+    fun _minDepthRecursive(root: TreeNode?, currentDepth: Int) {
 
-        renderer.setCellColor(i, 13, GridRenderer.BG_WHITE);
+        if (root == null)
+        {
+            return;
+        }
+
+        if (_isLeafNode(root))
+        {
+            if (_minDepth > currentDepth)
+            {
+                _minDepth = currentDepth;
+            }
+        }
+
+        _minDepthRecursive(root.left, currentDepth + 1);
+        _minDepthRecursive(root.right, currentDepth + 1);
     }
 
-    renderer.setCellColor(0, 0, GridRenderer.BG_WHITE);
-    renderer.setCellColor(0, 1, GridRenderer.BG_WHITE);
-    renderer.setCellColor(1, 0, GridRenderer.BG_WHITE);
+    fun minDepth(root: TreeNode?): Int {
 
-    renderer.setCellColor(13, 14, GridRenderer.BG_WHITE);
-    renderer.setCellColor(14, 14, GridRenderer.BG_WHITE);
-    renderer.setCellColor(14, 13, GridRenderer.BG_WHITE);
+        if (root == null)
+        {
+            return 0;
+        }
 
-    renderer.draw();
+        _minDepth = Int.MAX_VALUE;
+
+        _minDepthRecursive(root, 1);
+
+        return _minDepth;
+    }
 }
 
 fun main() {
 
-    testGridRenderer();
 }
