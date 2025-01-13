@@ -2,6 +2,7 @@ import com.wizneylabs.leetcoding.GridRenderer
 import com.wizneylabs.leetcoding.exercises.HashTableLeetcode
 import com.wizneylabs.leetcoding.MaxHeap
 import kotlin.math.max
+import kotlin.math.min
 
 class TreeNode(var `val` : Int) {
     var left : TreeNode? = null;
@@ -10,59 +11,44 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun _maxAncestorDiffRecursive(root: TreeNode?): Int {
+    
+
+    /**
+     *  Min Depth Recursive
+     */
+
+    fun _minDepthRecursive(root: TreeNode?): Int {
 
         if (root == null)
         {
-            return Int.MIN_VALUE;
+            return Int.MAX_VALUE;
         }
 
-        var leftChildDiff = Int.MIN_VALUE;
-        var rightChildDiff = Int.MIN_VALUE;
+        val leftChildMinDepth = _minDepthRecursive(root.left);
+        val rightChildMinDepth = _minDepthRecursive(root.right);
 
-        val leftNode = root.left;
-        val rightNode = root.right;
-
-        if (leftNode != null)
+        if (leftChildMinDepth == Int.MAX_VALUE && rightChildMinDepth == Int.MAX_VALUE)
         {
-            leftChildDiff = Math.abs(root.`val` - leftNode.`val`);
+            return 1;
         }
 
-        if (rightNode != null)
-        {
-            rightChildDiff = Math.abs(root.`val` - rightNode.`val`);
-        }
-
-//        println("visiting tree node: ${root.`val`}, leftChildDiff = ${leftChildDiff}, rightChildDiff = ${rightChildDiff}");
-
-        val leftChildMaxAncestorDiff = _maxAncestorDiffRecursive(leftNode);
-        val rightChildMaxAncestorDiff = _maxAncestorDiffRecursive(rightNode);
-
-        println("visiting tree node: ${root.`val`}, leftMaxAncestor = ${leftChildMaxAncestorDiff}, rightMaxAncestor = ${rightChildMaxAncestorDiff}");
-
-        return max(leftChildDiff, max(rightChildDiff,
-                max(leftChildMaxAncestorDiff, rightChildMaxAncestorDiff)));
+        return min(leftChildMinDepth, rightChildMinDepth) + 1;
     }
 
-    fun maxAncestorDiff(root: TreeNode?): Int {
+    fun minDepth(root: TreeNode?): Int {
 
-        return _maxAncestorDiffRecursive(root);
+        val depth = _minDepthRecursive(root);
+
+        if (depth == Int.MAX_VALUE)
+        {
+            return 0;
+        }
+
+        return depth;
     }
 }
 
 fun main() {
 
-    var root = TreeNode(8);
-    root.left = TreeNode(3);
-    root.right = TreeNode(10);
-    root.left?.left = TreeNode(1);
-    root.left?.right = TreeNode(6);
-    root.left?.right?.left = TreeNode(4);
-    root.left?.right?.right = TreeNode(7);
-    root.right?.right = TreeNode(14);
-    root.right?.right?.left = TreeNode(13);
 
-    val result = Solution().maxAncestorDiff(root);
-
-    println("result = ${result}");
 }
