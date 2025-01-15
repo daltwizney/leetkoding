@@ -11,13 +11,7 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-
-
-    /**
-     *  Min Depth Recursive
-     */
-
-    fun _minDepthRecursive(root: TreeNode?): Int {
+    private fun _minDepthRecursive(root: TreeNode?): Int {
 
         if (root == null)
         {
@@ -27,25 +21,23 @@ class Solution {
         val leftChildMinDepth = _minDepthRecursive(root.left);
         val rightChildMinDepth = _minDepthRecursive(root.right);
 
-        if (leftChildMinDepth == Int.MAX_VALUE && rightChildMinDepth == Int.MAX_VALUE)
+        val minChildDepth = min(leftChildMinDepth, rightChildMinDepth);
+
+        if (minChildDepth == Int.MAX_VALUE)
         {
             return 1;
         }
 
-        return min(leftChildMinDepth, rightChildMinDepth) + 1;
+        return minChildDepth + 1;
     }
 
     fun minDepth(root: TreeNode?): Int {
 
-        val depth = _minDepthRecursive(root);
+        val result = _minDepthRecursive(root);
 
-        if (depth == Int.MAX_VALUE)
-        {
-            return 0;
-        }
-
-        return depth;
+        return if (result == Int.MAX_VALUE) 0 else result;
     }
+
 }
 
 fun main() {
