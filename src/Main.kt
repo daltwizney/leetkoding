@@ -11,7 +11,7 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    
+
 
     /**
      *  Min Depth Recursive
@@ -50,5 +50,5 @@ class Solution {
 
 fun main() {
 
-
+    println("hello leetkoding!");
 }
