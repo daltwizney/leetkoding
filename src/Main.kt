@@ -11,33 +11,25 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    private fun _minDepthRecursive(root: TreeNode?): Int {
+    fun _maxDepthRecursive(root: TreeNode?): Int {
 
         if (root == null)
         {
-            return Int.MAX_VALUE;
+            return 0;
         }
 
-        val leftChildMinDepth = _minDepthRecursive(root.left);
-        val rightChildMinDepth = _minDepthRecursive(root.right);
+        val leftChildMaxDepth = _maxDepthRecursive(root.left);
+        val rightChildMaxDepth = _maxDepthRecursive(root.right);
 
-        val minChildDepth = min(leftChildMinDepth, rightChildMinDepth);
+        var maxChildDepth = max(leftChildMaxDepth, rightChildMaxDepth);
 
-        if (minChildDepth == Int.MAX_VALUE)
-        {
-            return 1;
-        }
-
-        return minChildDepth + 1;
+        return maxChildDepth + 1;
     }
 
-    fun minDepth(root: TreeNode?): Int {
+    fun maxDepth(root: TreeNode?): Int {
 
-        val result = _minDepthRecursive(root);
-
-        return if (result == Int.MAX_VALUE) 0 else result;
+        return _maxDepthRecursive(root);
     }
-
 }
 
 fun main() {
