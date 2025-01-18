@@ -11,5 +11,4 @@ import kotlin.math.min
 
 fun main() = runBlocking {
 
-    println("program execution complete");
 }
