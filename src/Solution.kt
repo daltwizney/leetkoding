@@ -9,34 +9,56 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun _minDepth(root: TreeNode?): Int {
-
-        if (root == null)
-        {
-            return Int.MAX_VALUE;
-        }
-
-        val leftChildMinDepth = _minDepth(root.left);
-        val rightChildMinDepth = _minDepth(root.right);
-
-        if (leftChildMinDepth == Int.MAX_VALUE &&
-            rightChildMinDepth == Int.MAX_VALUE)
-        {
-            return 1;
-        }
-
-        return min(leftChildMinDepth, rightChildMinDepth) + 1;
-    }
-
     fun minDepth(root: TreeNode?): Int {
 
-        val result = _minDepth(root);
-
-        if (result == Int.MAX_VALUE)
+        if (root == null)
         {
             return 0;
         }
 
-        return result;
+        val queue = LinkedList<TreeNode?>();
+
+        queue.addLast(root);
+
+        var currentDepth = 1;
+
+        var nodesInLevel = 1;
+        var nodesInNextLevel = 0;
+
+        while (queue.isNotEmpty())
+        {
+            for (i in 0..nodesInLevel - 1)
+            {
+                val node = queue.removeFirst();
+
+                if (node == null)
+                {
+                    continue;
+                }
+
+                if (node.left == null && node.right == null)
+                {
+                    return currentDepth;
+                }
+
+                if (node.left != null)
+                {
+                    queue.addLast(node.left);
+                    nodesInNextLevel++;
+                }
+
+                if (node.right != null)
+                {
+                    queue.addLast(node.right);
+                    nodesInNextLevel++;
+                }
+            }
+
+            currentDepth++;
+            nodesInLevel = nodesInNextLevel;
+            nodesInNextLevel = 0;
+        }
+
+        return Int.MAX_VALUE;
     }
 }
