@@ -11,5 +11,16 @@ import kotlin.math.min
 
 fun main() = runBlocking {
 
-    println("min = ${min(4, 4)}");
+    val mazeHeight = 50;
+    val mazeWidth = 50;
+
+    val horizontalWalks = 10;
+    val verticalWalks = 10;
+
+    val maze = Maze(mazeWidth, mazeHeight);
+    maze.generateDrunkenCrawl(horizontalWalks, verticalWalks);
+
+    val renderer = MazeRenderer(maze);
+
+    renderer.draw();
 }
