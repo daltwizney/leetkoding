@@ -83,4 +83,9 @@ class Maze(width: Int, height: Int) {
 
         return i >= 0 && i < _height && j >= 0 && j < _width;
     }
+
+    fun isWalkable(i: Int, j: Int): Boolean {
+
+        return isValidCell(i, j) && _maze[i][j] == 1;
+    }
 }
