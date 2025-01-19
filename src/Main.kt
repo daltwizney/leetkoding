@@ -11,4 +11,5 @@ import kotlin.math.min
 
 fun main() = runBlocking {
 
+    println("min = ${min(4, 4)}");
 }

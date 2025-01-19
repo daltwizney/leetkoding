@@ -1,5 +1,6 @@
 import java.util.*
 import kotlin.collections.ArrayDeque
+import kotlin.math.min
 
 class TreeNode(var `val` : Int) {
     var left : TreeNode? = null;
@@ -8,65 +9,32 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun zigzagLevelOrder(root: TreeNode?): List<List<Int>> {
+    fun _minDepth(root: TreeNode?): Int {
 
         if (root == null)
         {
-            return listOf();
+            return Int.MAX_VALUE;
         }
 
-        var zig = true;
+        val leftChildMinDepth = _minDepth(root.left);
+        val rightChildMinDepth = _minDepth(root.right);
 
-        var result = mutableListOf<List<Int>>();
-
-        val deque = ArrayDeque<TreeNode?>();
-
-        deque.addLast(root);
-
-        var currentLevelNodeCount = 1;
-        var nextLevelNodeCount = 0;
-
-        while (deque.isNotEmpty())
+        if (leftChildMinDepth == Int.MAX_VALUE &&
+            rightChildMinDepth == Int.MAX_VALUE)
         {
-            var currentLevelList = LinkedList<Int>();
+            return 1;
+        }
 
-            for (i in 0..currentLevelNodeCount - 1)
-            {
-                val node = deque.removeFirst();
+        return min(leftChildMinDepth, rightChildMinDepth) + 1;
+    }
 
-                if (node == null)
-                {
-                    continue;
-                }
+    fun minDepth(root: TreeNode?): Int {
 
-                if (zig)
-                {
-                    currentLevelList.addLast(node.`val`);
-                }
-                else // zag
-                {
-                    currentLevelList.addFirst(node.`val`);
-                }
+        val result = _minDepth(root);
 
-                if (node.left != null)
-                {
-                    deque.addLast(node.left);
-                    nextLevelNodeCount++;
-                }
-
-                if (node.right != null)
-                {
-                    deque.addLast(node.right);
-                    nextLevelNodeCount++;
-                }
-            }
-
-            result.add(currentLevelList);
-
-            currentLevelNodeCount = nextLevelNodeCount;
-            nextLevelNodeCount = 0;
-
-            zig = !zig;
+        if (result == Int.MAX_VALUE)
+        {
+            return 0;
         }
 
         return result;
