@@ -9,56 +9,45 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun minDepth(root: TreeNode?): Int {
+    fun insertIntoBST(root: TreeNode?, `val`: Int): TreeNode? {
 
         if (root == null)
         {
-            return 0;
+            return TreeNode(`val`);
         }
 
-        val queue = LinkedList<TreeNode?>();
+        var currentNode = root;
 
-        queue.addLast(root);
+        while (true) {
 
-        var currentDepth = 1;
-
-        var nodesInLevel = 1;
-        var nodesInNextLevel = 0;
-
-        while (queue.isNotEmpty())
-        {
-            for (i in 0..nodesInLevel - 1)
+            if (`val` < currentNode?.`val`!!)
             {
-                val node = queue.removeFirst();
-
-                if (node == null)
+                if (currentNode.left == null)
                 {
+                    // add to tree
+                    currentNode.left = TreeNode(`val`);
+                    return root;
+                }
+                else
+                {
+                    currentNode = currentNode.left;
                     continue;
                 }
-
-                if (node.left == null && node.right == null)
+            }
+            else // `val` > currentNode?.`val`
+            {
+                if (currentNode.right == null)
                 {
-                    return currentDepth;
+                    // add to tree
+                    currentNode.right = TreeNode(`val`)
+                    return root;
                 }
-
-                if (node.left != null)
+                else
                 {
-                    queue.addLast(node.left);
-                    nodesInNextLevel++;
-                }
-
-                if (node.right != null)
-                {
-                    queue.addLast(node.right);
-                    nodesInNextLevel++;
+                    currentNode = currentNode.right;
+                    continue;
                 }
             }
-
-            currentDepth++;
-            nodesInLevel = nodesInNextLevel;
-            nodesInNextLevel = 0;
         }
-
-        return Int.MAX_VALUE;
     }
 }
