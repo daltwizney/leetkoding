@@ -1,8 +1,9 @@
+import com.wizneylabs.kollie.math.Vector2iTests
 import kotlinx.coroutines.runBlocking
 import com.wizneylabs.kollie.pathfinding.Maze
 import com.wizneylabs.kollie.pathfinding.MazeRenderer
 
-fun main() = runBlocking {
+fun mazeTest() {
 
     val mazeHeight = 50;
     val mazeWidth = 50;
@@ -22,4 +23,9 @@ fun main() = runBlocking {
     renderer.setEndPoint(endPoint);
 
     renderer.draw();
+}
+
+fun main() = runBlocking {
+
+    Vector2iTests().run();
 }

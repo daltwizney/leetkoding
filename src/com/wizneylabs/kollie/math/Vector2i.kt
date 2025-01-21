@@ -38,4 +38,21 @@ class Vector2i {
 
         return this.x * other.x + this.y * other.y;
     }
+
+    override fun equals(other: Any?): Boolean {
+
+        if (other != null && other is Vector2i)
+        {
+            if (other.x == this.x && other.y == this.y)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    override fun toString(): String = "($x, $y)";
+
+    override fun hashCode(): Int = Pair<Int, Int>(this.x, this.y).hashCode();
 }
