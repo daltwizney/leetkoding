@@ -1,5 +1,6 @@
 import com.wizneylabs.kollie.math.Vector2i
 import com.wizneylabs.kollie.math.Vector2iTests
+import com.wizneylabs.kollie.pathfinding.BFSPathfinder
 import kotlinx.coroutines.runBlocking
 import com.wizneylabs.kollie.pathfinding.Maze
 import com.wizneylabs.kollie.pathfinding.MazeRenderer
@@ -18,15 +19,23 @@ fun mazeTest() {
     val startPoint = maze.getRandomWalkableCell();
     val endPoint = maze.getRandomWalkableCell();
 
+    val pathfinder = BFSPathfinder(maze);
+
+    val path = pathfinder.computePath(startPoint, endPoint);
+
+    printPath(path);
+
     val renderer = MazeRenderer(maze);
 
     renderer.setStartPoint(startPoint);
     renderer.setEndPoint(endPoint);
 
+    renderer.setPath(path);
+
     renderer.draw();
 }
 
-fun printPath(path: Array<Vector2i>) {
+fun printPath(path: List<Vector2i>) {
 
     println("path = [");
 
@@ -40,4 +49,5 @@ fun printPath(path: Array<Vector2i>) {
 
 fun main() = runBlocking {
 
+    mazeTest();
 }

@@ -1,6 +1,7 @@
 package com.wizneylabs.kollie.pathfinding
 
 import com.wizneylabs.kollie.math.Vector2i
+import java.util.*
 
 class MazeRenderer(maze: Maze) {
 
@@ -11,9 +12,16 @@ class MazeRenderer(maze: Maze) {
     private var _startPoint: Vector2i = Vector2i(-1, -1);
     private var _endPoint: Vector2i = Vector2i(-1, -1);
 
+    private var _path: List<Vector2i> = LinkedList<Vector2i>();
+
     init {
 
         _renderer = GridRenderer(_maze.Height, _maze.Width);
+    }
+
+    fun setPath(path: List<Vector2i>) {
+
+        this._path = path;
     }
 
     fun draw() {
@@ -43,6 +51,16 @@ class MazeRenderer(maze: Maze) {
                         _renderer.setCellColor(i, j, GridRenderer.BG_WHITE);
                     }
                 }
+            }
+        }
+
+        if (_path.size > 0)
+        {
+            for (i in 1.._path.size - 2)
+            {
+                val cell = _path[i];
+
+                _renderer.setCellColor(cell.x, cell.y, GridRenderer.BG_YELLOW);
             }
         }
 
