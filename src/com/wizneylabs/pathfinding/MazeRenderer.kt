@@ -1,4 +1,4 @@
-import com.wizneylabs.leetcoding.GridRenderer
+package com.wizneylabs.pathfinding
 
 class MazeRenderer(maze: Maze) {
 

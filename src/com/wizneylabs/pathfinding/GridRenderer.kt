@@ -1,4 +1,4 @@
-package com.wizneylabs.leetcoding
+package com.wizneylabs.pathfinding
 
 class GridRenderer(rows: Int, cols: Int) {
 
@@ -38,30 +38,30 @@ class GridRenderer(rows: Int, cols: Int) {
         // top row
         for (i in 0..this._rows + 1)
         {
-            print("${BG_BLACK}   ${RESET}");
+            print("$BG_BLACK   $RESET");
         }
 
         println("");
 
         for (i in 0..this._rows - 1)
         {
-            print("${BG_BLACK}   ${RESET}");
+            print("$BG_BLACK   $RESET");
 
             for (j in 0..this._cols - 1)
             {
                 val cellColor = this._gridData[i][j];
 
-                print("${cellColor}   ${RESET}");
+                print("${cellColor}   $RESET");
             }
 
-            print("${BG_BLACK}   ${RESET}");
+            print("$BG_BLACK   $RESET");
             println("");
         }
 
         // bottom row
         for (i in 0..this._rows + 1)
         {
-            print("${BG_BLACK}   ${RESET}");
+            print("$BG_BLACK   $RESET");
         }
     }
 

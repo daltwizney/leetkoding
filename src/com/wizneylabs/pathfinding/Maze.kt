@@ -1,3 +1,5 @@
+package com.wizneylabs.pathfinding
+
 class Maze(width: Int, height: Int) {
 
     private val _width = width;
