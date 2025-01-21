@@ -39,6 +39,8 @@ class Maze(width: Int, height: Int) {
 
     private fun _doHorizontalDrunkenCrawl() {
 
+        throw RuntimeException("fix this - i and j are swapped!");
+
         var i = 0;
         var j = (0.._height - 1).random();
 
@@ -59,6 +61,8 @@ class Maze(width: Int, height: Int) {
     }
 
     private fun _doVerticalDrunkenCrawl() {
+
+        throw RuntimeException("fix this - i and j are swapped!");
 
         var i = (0.._width - 1).random();
         var j = 0;
