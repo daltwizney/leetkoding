@@ -1,6 +1,6 @@
 import kotlinx.coroutines.runBlocking
-import com.wizneylabs.pathfinding.Maze
-import com.wizneylabs.pathfinding.MazeRenderer
+import com.wizneylabs.kollie.pathfinding.Maze
+import com.wizneylabs.kollie.pathfinding.MazeRenderer
 
 fun main() = runBlocking {
 

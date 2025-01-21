@@ -1,4 +1,7 @@
-package com.wizneylabs.pathfinding
+package com.wizneylabs.kollie.pathfinding
+
+import com.wizneylabs.kollie.math.Vector2i
+import java.util.Vector
 
 class Maze(width: Int, height: Int) {
 
@@ -28,7 +31,7 @@ class Maze(width: Int, height: Int) {
         return _maze[i][j];
     }
 
-    fun getRandomWalkableCell(): Pair<Int, Int> {
+    fun getRandomWalkableCell(): Vector2i {
 
         if (!_hasWalkableCells)
         {
@@ -42,7 +45,7 @@ class Maze(width: Int, height: Int) {
 
             if (isWalkable(i, j))
             {
-                return Pair(i, j);
+                return Vector2i(i, j);
             }
         }
     }

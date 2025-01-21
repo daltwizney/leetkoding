@@ -1,4 +1,4 @@
-package com.wizneylabs.pathfinding
+package com.wizneylabs.kollie.pathfinding
 
 class GridRendererTests {
     fun testGridRenderer() {

@@ -1,4 +1,6 @@
-package com.wizneylabs.pathfinding
+package com.wizneylabs.kollie.pathfinding
+
+import com.wizneylabs.kollie.math.Vector2i
 
 class MazeRenderer(maze: Maze) {
 
@@ -6,8 +8,8 @@ class MazeRenderer(maze: Maze) {
 
     private val _renderer: GridRenderer;
 
-    private var _startPoint: Pair<Int, Int> = Pair(-1, -1);
-    private var _endPoint: Pair<Int, Int> = Pair(-1, -1);
+    private var _startPoint: Vector2i = Vector2i(-1, -1);
+    private var _endPoint: Vector2i = Vector2i(-1, -1);
 
     init {
 
@@ -28,11 +30,11 @@ class MazeRenderer(maze: Maze) {
                 }
                 else if (cellValue == 1) // walkable
                 {
-                    if (i == _startPoint.first && j == _startPoint.second)
+                    if (i == _startPoint.x && j == _startPoint.y)
                     {
                         _renderer.setCellColor(i, j, GridRenderer.BG_BRIGHT_GREEN);
                     }
-                    else if (i == _endPoint.first && j == _endPoint.second)
+                    else if (i == _endPoint.x && j == _endPoint.y)
                     {
                         _renderer.setCellColor(i, j, GridRenderer.BG_BRIGHT_RED);
                     }
@@ -47,12 +49,12 @@ class MazeRenderer(maze: Maze) {
         _renderer.draw();
     }
 
-    fun setStartPoint(value: Pair<Int, Int>) {
+    fun setStartPoint(value: Vector2i) {
 
         _startPoint = value;
     }
 
-    fun setEndPoint(value: Pair<Int, Int>) {
+    fun setEndPoint(value: Vector2i) {
 
         _endPoint = value;
     }
