@@ -39,37 +39,12 @@ class Maze(width: Int, height: Int) {
 
     private fun _doHorizontalDrunkenCrawl() {
 
-        throw RuntimeException("fix this - i and j are swapped!");
-
-        var i = 0;
-        var j = (0.._height - 1).random();
-
-        while (i < _width)
-        {
-            _maze[j][i] = 1;
-
-            var deltaJ: Int;
-
-            do {
-                deltaJ = (-1..1).random();
-
-            } while (!isValidCell(i, j + deltaJ))
-
-            j += deltaJ;
-            i += (0..1).random();
-        }
-    }
-
-    private fun _doVerticalDrunkenCrawl() {
-
-        throw RuntimeException("fix this - i and j are swapped!");
-
-        var i = (0.._width - 1).random();
+        var i = (0.._height - 1).random();
         var j = 0;
 
-        while (j < _height)
+        while (j < _width)
         {
-            _maze[j][i] = 1;
+            _maze[i][j] = 1;
 
             var deltaI: Int;
 
@@ -80,6 +55,27 @@ class Maze(width: Int, height: Int) {
 
             i += deltaI;
             j += (0..1).random();
+        }
+    }
+
+    private fun _doVerticalDrunkenCrawl() {
+
+        var i = 0;
+        var j = (0.._width - 1).random();
+
+        while (i < _height)
+        {
+            _maze[i][j] = 1;
+
+            var deltaJ: Int;
+
+            do {
+                deltaJ = (-1..1).random();
+
+            } while (!isValidCell(i, j + deltaJ))
+
+            i += (0..1).random();
+            j += deltaJ;
         }
     }
 
