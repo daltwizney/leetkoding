@@ -1,3 +1,4 @@
+import com.wizneylabs.kollie.math.Vector2i
 import com.wizneylabs.kollie.math.Vector2iTests
 import kotlinx.coroutines.runBlocking
 import com.wizneylabs.kollie.pathfinding.Maze
@@ -25,7 +26,18 @@ fun mazeTest() {
     renderer.draw();
 }
 
+fun printPath(path: Array<Vector2i>) {
+
+    println("path = [");
+
+    for (i in 0..path.size - 1) {
+
+        println("\t(${path[i].x}, ${path[i].y})");
+    }
+
+    println("]");
+}
+
 fun main() = runBlocking {
 
-    Vector2iTests().run();
 }
