@@ -11,6 +11,8 @@ class Maze(width: Int, height: Int) {
 
     private val _maze: Array<Array<Int>>;
 
+    private var _hasWalkableCells = false;
+
     init {
         /**
          *  0 = wall cell
@@ -24,6 +26,25 @@ class Maze(width: Int, height: Int) {
         return _maze[i][j];
     }
 
+    fun getRandomWalkableCell(): Pair<Int, Int> {
+
+        if (!_hasWalkableCells)
+        {
+            throw RuntimeException("No walkable cells in grid - need to generate a maze first!");
+        }
+
+        while (true) {
+
+            val i = (0.._height - 1).random();
+            val j = (0.._width - 1).random();
+
+            if (isWalkable(i, j))
+            {
+                return Pair(i, j);
+            }
+        }
+    }
+
     fun generateDrunkenCrawl(horizontalWalks: Int, verticalWalks: Int) {
 
         for (i in 0..horizontalWalks)
@@ -35,6 +56,8 @@ class Maze(width: Int, height: Int) {
         {
             _doVerticalDrunkenCrawl();
         }
+
+        _hasWalkableCells = true;
     }
 
     private fun _doHorizontalDrunkenCrawl() {

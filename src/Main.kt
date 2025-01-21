@@ -14,13 +14,19 @@ fun main() = runBlocking {
     val mazeHeight = 50;
     val mazeWidth = 50;
 
-    val horizontalWalks = 10;
-    val verticalWalks = 10;
+    val horizontalWalks = 12;
+    val verticalWalks = 12;
 
     val maze = Maze(mazeWidth, mazeHeight);
     maze.generateDrunkenCrawl(horizontalWalks, verticalWalks);
 
+    val startPoint = maze.getRandomWalkableCell();
+    val endPoint = maze.getRandomWalkableCell();
+
     val renderer = MazeRenderer(maze);
+
+    renderer.setStartPoint(startPoint);
+    renderer.setEndPoint(endPoint);
 
     renderer.draw();
 }
