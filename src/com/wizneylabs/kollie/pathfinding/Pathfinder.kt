@@ -4,7 +4,9 @@ import com.wizneylabs.kollie.math.Vector2i
 import java.util.*
 import kotlin.collections.ArrayDeque
 
-class BFSPathfinder(maze: Maze) {
+private class NodeData(var indices: Vector2i, var distance: Float);
+
+class Pathfinder(maze: Maze) {
 
     private var _maze = maze;
 
@@ -40,8 +42,14 @@ class BFSPathfinder(maze: Maze) {
         return neighbors;
     }
 
-    fun computePath(startPoint: Vector2i, endPoint: Vector2i)
-        : List<Vector2i>{
+    fun computePathDijkstra(startPoint: Vector2i, endPoint: Vector2i)
+        : List<Vector2i> {
+
+        return listOf<Vector2i>();
+    }
+
+    fun computePathBFS(startPoint: Vector2i, endPoint: Vector2i)
+        : List<Vector2i> {
 
         val visited = hashMapOf<Vector2i, Vector2i>();
 
