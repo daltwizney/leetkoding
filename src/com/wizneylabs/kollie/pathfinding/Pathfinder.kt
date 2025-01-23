@@ -8,6 +8,11 @@ private class NodeData(var indices: Vector2i, var distance: Float);
 
 class Pathfinder(maze: Maze) {
 
+    public val Iterations: Int
+        get() = _iterations;
+
+    private var _iterations = 0;
+
     private var _maze = maze;
 
     fun getWalkableNeighbors(cell: Vector2i): MutableList<Vector2i> {
@@ -51,17 +56,28 @@ class Pathfinder(maze: Maze) {
     fun computePathBFS(startPoint: Vector2i, endPoint: Vector2i)
         : List<Vector2i> {
 
-        val visited = hashMapOf<Vector2i, Vector2i>();
+        // these sets keep track of explored nodes and frontier nodes
+        val exploredNodes = hashSetOf<Vector2i>();
+        val frontierNodesSet = hashSetOf<Vector2i>();
 
-        val queue = ArrayDeque<Vector2i>();
+        // this keeps track of all node parents
+        val parents = hashMapOf<Vector2i, Vector2i>();
 
-        queue.addLast(startPoint);
+        // this is the queue containing frontier nodes
+        val frontierNodesQueue = ArrayDeque<Vector2i>();
+
+        frontierNodesQueue.addLast(startPoint);
 
         var pathFound = false;
+        _iterations = 0;
 
-        while (queue.isNotEmpty())
+        while (frontierNodesQueue.isNotEmpty())
         {
-            val cell = queue.removeFirst();
+            _iterations++;
+
+            val cell = frontierNodesQueue.removeFirst();
+
+            exploredNodes.add(cell);
 
             if (cell == endPoint)
             {
@@ -73,11 +89,15 @@ class Pathfinder(maze: Maze) {
 
             for (i in 0..neighbors.size - 1)
             {
-                if (!visited.containsKey(neighbors[i]))
-                {
-                    queue.addLast(neighbors[i]);
+                val neighbor = neighbors[i];
 
-                    visited[neighbors[i]] = cell;
+                if (!exploredNodes.contains(neighbor)
+                    && !frontierNodesSet.contains((neighbor)))
+                {
+                    frontierNodesQueue.addLast(neighbor);
+                    frontierNodesSet.add(neighbor);
+
+                    parents[neighbor] = cell;
                 }
             }
         }
@@ -91,13 +111,13 @@ class Pathfinder(maze: Maze) {
 
         path.addLast(endPoint);
 
-        var parent = visited[endPoint];
+        var parent = parents[endPoint];
 
         while (parent != startPoint) {
 
             path.addFirst(parent!!);
 
-            parent = visited[parent];
+            parent = parents[parent];
         }
 
         path.addFirst(startPoint);

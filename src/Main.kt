@@ -20,7 +20,7 @@ fun mazeTest() {
 
     val pathfinder = Pathfinder(maze);
 
-    val path = pathfinder.computePathDijkstra(startPoint, endPoint);
+    val path = pathfinder.computePathBFS(startPoint, endPoint);
 
     val renderer = MazeRenderer(maze);
 
@@ -30,6 +30,8 @@ fun mazeTest() {
     renderer.setPath(path);
 
     renderer.draw();
+
+    println("path found in ${pathfinder.Iterations} iterations!");
 }
 
 fun printPath(path: List<Vector2i>) {

@@ -63,6 +63,8 @@ class GridRenderer(rows: Int, cols: Int) {
         {
             print("$BG_BLACK   $RESET");
         }
+
+        println("");
     }
 
     fun setCellColor(row: Int, col: Int, color: String) {
