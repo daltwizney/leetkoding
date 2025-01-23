@@ -1,9 +1,6 @@
 import com.wizneylabs.kollie.math.Vector2i
-import com.wizneylabs.kollie.pathfinding.PathfinderBFS
+import com.wizneylabs.kollie.pathfinding.*
 import kotlinx.coroutines.runBlocking
-import com.wizneylabs.kollie.pathfinding.Maze
-import com.wizneylabs.kollie.pathfinding.MazeRenderer
-import com.wizneylabs.kollie.pathfinding.PathfinderBase
 
 fun mazeTest() {
 
