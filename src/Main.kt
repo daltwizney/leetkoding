@@ -16,7 +16,7 @@ fun mazeTest() {
     val startPoint = maze.getRandomWalkableCell();
     val endPoint = maze.getRandomWalkableCell();
 
-    val pathfinder: PathfinderBase = PathfinderBFS(maze);
+    val pathfinder: PathfinderBase = PathfinderDijkstra(maze);
 
     val path = pathfinder.computePath(startPoint, endPoint);
 

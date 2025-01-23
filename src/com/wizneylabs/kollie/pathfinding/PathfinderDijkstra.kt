@@ -14,13 +14,16 @@ class PathfinderDijkstra(maze: Maze)
         val exploredNodes = hashSetOf<Vector2i>();
         val frontierNodesSet = hashSetOf<Vector2i>();
 
-        // this keeps track of all node parents
+        // this keeps track of all node parents and distances
         val parents = hashMapOf<Vector2i, Vector2i>();
+
+        val distances = hashMapOf<Vector2i, Float>();
 
         // this is the queue containing frontier nodes
         val frontierNodesQueue = ArrayDeque<Vector2i>();
 
         frontierNodesQueue.addLast(startPoint);
+        distances[startPoint] = 0.0f;
 
         var pathFound = false;
         _iterations = 0;
@@ -32,6 +35,8 @@ class PathfinderDijkstra(maze: Maze)
             val cell = frontierNodesQueue.removeFirst();
 
             exploredNodes.add(cell);
+
+            val cellDistance: Float = distances[cell]!!;
 
             if (cell == endPoint)
             {
@@ -47,10 +52,24 @@ class PathfinderDijkstra(maze: Maze)
 
                 if (!exploredNodes.contains(neighbor))
                 {
-                    frontierNodesQueue.addLast(neighbor);
-                    frontierNodesSet.add(neighbor);
+                    if (!frontierNodesSet.contains(neighbor))
+                    {
+                        frontierNodesQueue.addLast(neighbor);
+                        frontierNodesSet.add(neighbor);
 
-                    parents[neighbor] = cell;
+                        distances[neighbor] = cellDistance + 1.0f;
+                        parents[neighbor] = cell;
+                    }
+                    else
+                    {
+                        val newDistance = cellDistance + 1.0f;
+
+                        if (newDistance < distances[neighbor]!!)
+                        {
+                            distances[neighbor] = newDistance;
+                            parents[neighbor] = cell;
+                        }
+                    }
                 }
             }
         }
