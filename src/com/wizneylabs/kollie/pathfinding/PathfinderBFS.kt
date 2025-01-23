@@ -6,54 +6,10 @@ import kotlin.collections.ArrayDeque
 
 private class NodeData(var indices: Vector2i, var distance: Float);
 
-class Pathfinder(maze: Maze) {
+class PathfinderBFS(maze: Maze):
+    PathfinderBase(maze) {
 
-    public val Iterations: Int
-        get() = _iterations;
-
-    private var _iterations = 0;
-
-    private var _maze = maze;
-
-    fun getWalkableNeighbors(cell: Vector2i): MutableList<Vector2i> {
-
-        val neighbors = mutableListOf<Vector2i>();
-
-        val left = Vector2i(cell.x - 1, cell.y);
-        val right = Vector2i(cell.x + 1, cell.y);
-        val top = Vector2i(cell.x, cell.y + 1);
-        val bottom = Vector2i(cell.x, cell.y - 1);
-
-        if (_maze.isWalkable(left.x, left.y))
-        {
-            neighbors.add(left);
-        }
-
-        if (_maze.isWalkable(right.x, right.y))
-        {
-            neighbors.add(right);
-        }
-
-        if (_maze.isWalkable(top.x, top.y))
-        {
-            neighbors.add(top);
-        }
-
-        if (_maze.isWalkable(bottom.x, bottom.y))
-        {
-            neighbors.add(bottom);
-        }
-
-        return neighbors;
-    }
-
-    fun computePathDijkstra(startPoint: Vector2i, endPoint: Vector2i)
-        : List<Vector2i> {
-
-        return listOf<Vector2i>();
-    }
-
-    fun computePathBFS(startPoint: Vector2i, endPoint: Vector2i)
+    override fun computePath(startPoint: Vector2i, endPoint: Vector2i)
         : List<Vector2i> {
 
         // these sets keep track of explored nodes and frontier nodes

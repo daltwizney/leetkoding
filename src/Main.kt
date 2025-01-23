@@ -1,8 +1,9 @@
 import com.wizneylabs.kollie.math.Vector2i
-import com.wizneylabs.kollie.pathfinding.Pathfinder
+import com.wizneylabs.kollie.pathfinding.PathfinderBFS
 import kotlinx.coroutines.runBlocking
 import com.wizneylabs.kollie.pathfinding.Maze
 import com.wizneylabs.kollie.pathfinding.MazeRenderer
+import com.wizneylabs.kollie.pathfinding.PathfinderBase
 
 fun mazeTest() {
 
@@ -18,9 +19,9 @@ fun mazeTest() {
     val startPoint = maze.getRandomWalkableCell();
     val endPoint = maze.getRandomWalkableCell();
 
-    val pathfinder = Pathfinder(maze);
+    val pathfinder: PathfinderBase = PathfinderBFS(maze);
 
-    val path = pathfinder.computePathBFS(startPoint, endPoint);
+    val path = pathfinder.computePath(startPoint, endPoint);
 
     val renderer = MazeRenderer(maze);
 
