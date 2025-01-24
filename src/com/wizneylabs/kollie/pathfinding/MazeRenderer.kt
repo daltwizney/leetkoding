@@ -14,6 +14,7 @@ class MazeRenderer(maze: Maze) {
 
     private var _path: List<Vector2i> = LinkedList<Vector2i>();
     private var _exploredCells: List<Vector2i> = LinkedList<Vector2i>();
+    private var _frontierCells: List<Vector2i> = LinkedList<Vector2i>();
 
     init {
 
@@ -23,6 +24,11 @@ class MazeRenderer(maze: Maze) {
     fun setPath(path: List<Vector2i>) {
 
         this._path = path;
+    }
+
+    fun setFrontierCells(cells: List<Vector2i>) {
+
+        this._frontierCells = cells;
     }
 
     fun setExploredCells(cells: List<Vector2i>) {
@@ -59,6 +65,17 @@ class MazeRenderer(maze: Maze) {
                     val cell = _exploredCells[i];
 
                     _renderer.setCellColor(cell.x, cell.y, GridRenderer.BG_BLUE);
+                }
+            }
+
+            // draw frontier nodes
+            if (_frontierCells.size > 0)
+            {
+                for (i in 0.._frontierCells.size - 1)
+                {
+                    val cell = _frontierCells[i];
+
+                    _renderer.setCellColor(cell.x, cell.y, GridRenderer.BG_BRIGHT_CYAN);
                 }
             }
 

@@ -35,6 +35,7 @@ class PathfinderDijkstra(maze: Maze)
             val cell = frontierNodesQueue.removeFirst();
 
             _exploredNodes.add(cell);
+            _frontierNodes.remove(cell);
 
             val cellDistance: Float = distances[cell]!!;
 

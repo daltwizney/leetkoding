@@ -32,6 +32,7 @@ class PathfinderGreedyBestFirst(maze: Maze):
             val cell = frontierNodesQueue.remove().first;
 
             _exploredNodes.add(cell);
+            _frontierNodes.remove(cell);
 
             if (cell == endPoint)
             {

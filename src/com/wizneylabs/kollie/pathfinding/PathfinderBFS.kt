@@ -34,6 +34,7 @@ class PathfinderBFS(maze: Maze):
             val cell = frontierNodesQueue.removeFirst();
 
             _exploredNodes.add(cell);
+            _frontierNodes.remove(cell);
 
             if (cell == endPoint)
             {
