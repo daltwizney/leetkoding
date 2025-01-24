@@ -2,7 +2,6 @@ package com.wizneylabs.kollie.pathfinding
 
 import com.wizneylabs.kollie.math.Vector2i
 import java.util.*
-import kotlin.collections.ArrayDeque
 
 class PathfinderGreedyBestFirst(maze: Maze):
     PathfinderBase(maze) {
@@ -10,8 +9,8 @@ class PathfinderGreedyBestFirst(maze: Maze):
     override fun computePath(startPoint: Vector2i, endPoint: Vector2i): List<Vector2i> {
 
         // these sets keep track of explored nodes and frontier nodes
-        val exploredNodes = hashSetOf<Vector2i>();
-        val frontierNodesSet = hashSetOf<Vector2i>();
+        _exploredNodes.clear();
+        _frontierNodes.clear();
 
         // this keeps track of all node parents and distances
         val parents = hashMapOf<Vector2i, Vector2i>();
@@ -32,7 +31,7 @@ class PathfinderGreedyBestFirst(maze: Maze):
 
             val cell = frontierNodesQueue.remove().first;
 
-            exploredNodes.add(cell);
+            _exploredNodes.add(cell);
 
             if (cell == endPoint)
             {
@@ -46,13 +45,13 @@ class PathfinderGreedyBestFirst(maze: Maze):
             {
                 val neighbor = neighbors[i];
 
-                if (!exploredNodes.contains(neighbor))
+                if (!_exploredNodes.contains(neighbor))
                 {
-                    if (!frontierNodesSet.contains(neighbor))
+                    if (!_frontierNodes.contains(neighbor))
                     {
                         val distance = Vector2i.manhattanDistance(neighbor, endPoint);
                         frontierNodesQueue.add(Pair(neighbor, distance));
-                        frontierNodesSet.add(neighbor);
+                        _frontierNodes.add(neighbor);
 
                         parents[neighbor] = cell;
                     }

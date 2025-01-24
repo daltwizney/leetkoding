@@ -2,7 +2,7 @@ package com.wizneylabs.kollie.math
 
 import kotlin.math.abs
 
-class Vector2i {
+class Vector2i() {
 
     companion object {
 
@@ -15,10 +15,18 @@ class Vector2i {
     var x: Int = 0;
     var y: Int = 0;
 
-    constructor(x: Int, y: Int) {
+    init {
+        this.x = 0;
+        this.y = 0;
+    }
+
+    constructor(x: Int, y: Int)
+        : this() {
         this.x = x;
         this.y = y;
     }
+
+    fun copy() = Vector2i(this.x, this.y);
 
     operator fun plus(other: Vector2i) = Vector2i(x + other.x, y + other.y);
     operator fun minus(other: Vector2i) = Vector2i(x - other.x, y - other.y);

@@ -7,9 +7,18 @@ abstract class PathfinderBase(maze: Maze) {
     public val Iterations: Int
         get() = _iterations;
 
+    public val ExploredNodes: List<Vector2i>
+        get() = _exploredNodes.toList();
+
+    public val FrontierNodes: List<Vector2i>
+        get() = _frontierNodes.toList();
+
     protected var _iterations = 0;
 
     protected var _maze = maze;
+
+    protected val _exploredNodes = hashSetOf<Vector2i>();
+    protected val _frontierNodes = hashSetOf<Vector2i>();
 
     abstract fun computePath(startPoint: Vector2i, endPoint: Vector2i): List<Vector2i>;
 

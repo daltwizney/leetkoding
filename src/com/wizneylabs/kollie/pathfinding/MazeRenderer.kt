@@ -13,6 +13,7 @@ class MazeRenderer(maze: Maze) {
     private var _endPoint: Vector2i = Vector2i(-1, -1);
 
     private var _path: List<Vector2i> = LinkedList<Vector2i>();
+    private var _exploredCells: List<Vector2i> = LinkedList<Vector2i>();
 
     init {
 
@@ -22,6 +23,11 @@ class MazeRenderer(maze: Maze) {
     fun setPath(path: List<Vector2i>) {
 
         this._path = path;
+    }
+
+    fun setExploredCells(cells: List<Vector2i>) {
+
+        this._exploredCells = cells;
     }
 
     fun draw() {
@@ -38,24 +44,25 @@ class MazeRenderer(maze: Maze) {
                 }
                 else if (cellValue == 1) // walkable
                 {
-                    if (i == _startPoint.x && j == _startPoint.y)
-                    {
-                        _renderer.setCellColor(i, j, GridRenderer.BG_BRIGHT_GREEN);
-                    }
-                    else if (i == _endPoint.x && j == _endPoint.y)
-                    {
-                        _renderer.setCellColor(i, j, GridRenderer.BG_BRIGHT_RED);
-                    }
-                    else
-                    {
-                        _renderer.setCellColor(i, j, GridRenderer.BG_WHITE);
-                    }
+                    _renderer.setCellColor(i, j, GridRenderer.BG_WHITE);
                 }
             }
         }
 
         if (_path.size > 0)
         {
+            // draw explored nodes
+            if (_exploredCells.size > 0)
+            {
+                for (i in 0.._exploredCells.size - 1)
+                {
+                    val cell = _exploredCells[i];
+
+                    _renderer.setCellColor(cell.x, cell.y, GridRenderer.BG_BLUE);
+                }
+            }
+
+            // draw path
             for (i in 1.._path.size - 2)
             {
                 val cell = _path[i];
@@ -63,6 +70,10 @@ class MazeRenderer(maze: Maze) {
                 _renderer.setCellColor(cell.x, cell.y, GridRenderer.BG_YELLOW);
             }
         }
+
+        // draw start & end points
+        _renderer.setCellColor(_startPoint.x, _startPoint.y, GridRenderer.BG_BRIGHT_GREEN);
+        _renderer.setCellColor(_endPoint.x, _endPoint.y, GridRenderer.BG_BRIGHT_RED);
 
         _renderer.draw();
     }

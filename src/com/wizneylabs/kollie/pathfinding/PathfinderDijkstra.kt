@@ -11,8 +11,8 @@ class PathfinderDijkstra(maze: Maze)
             : List<Vector2i> {
 
         // these sets keep track of explored nodes and frontier nodes
-        val exploredNodes = hashSetOf<Vector2i>();
-        val frontierNodesSet = hashSetOf<Vector2i>();
+        _exploredNodes.clear();
+        _frontierNodes.clear();
 
         // this keeps track of all node parents and distances
         val parents = hashMapOf<Vector2i, Vector2i>();
@@ -34,7 +34,7 @@ class PathfinderDijkstra(maze: Maze)
 
             val cell = frontierNodesQueue.removeFirst();
 
-            exploredNodes.add(cell);
+            _exploredNodes.add(cell);
 
             val cellDistance: Float = distances[cell]!!;
 
@@ -50,12 +50,12 @@ class PathfinderDijkstra(maze: Maze)
             {
                 val neighbor = neighbors[i];
 
-                if (!exploredNodes.contains(neighbor))
+                if (!_exploredNodes.contains(neighbor))
                 {
-                    if (!frontierNodesSet.contains(neighbor))
+                    if (!_frontierNodes.contains(neighbor))
                     {
                         frontierNodesQueue.addLast(neighbor);
-                        frontierNodesSet.add(neighbor);
+                        _frontierNodes.add(neighbor);
 
                         distances[neighbor] = cellDistance + 1.0f;
                         parents[neighbor] = cell;

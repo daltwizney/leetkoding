@@ -13,8 +13,8 @@ class PathfinderBFS(maze: Maze):
         : List<Vector2i> {
 
         // these sets keep track of explored nodes and frontier nodes
-        val exploredNodes = hashSetOf<Vector2i>();
-        val frontierNodesSet = hashSetOf<Vector2i>();
+        _exploredNodes.clear();
+        _frontierNodes.clear();
 
         // this keeps track of all node parents
         val parents = hashMapOf<Vector2i, Vector2i>();
@@ -33,7 +33,7 @@ class PathfinderBFS(maze: Maze):
 
             val cell = frontierNodesQueue.removeFirst();
 
-            exploredNodes.add(cell);
+            _exploredNodes.add(cell);
 
             if (cell == endPoint)
             {
@@ -47,11 +47,11 @@ class PathfinderBFS(maze: Maze):
             {
                 val neighbor = neighbors[i];
 
-                if (!exploredNodes.contains(neighbor)
-                    && !frontierNodesSet.contains((neighbor)))
+                if (!_exploredNodes.contains(neighbor)
+                    && !_frontierNodes.contains((neighbor)))
                 {
                     frontierNodesQueue.addLast(neighbor);
-                    frontierNodesSet.add(neighbor);
+                    _frontierNodes.add(neighbor);
 
                     parents[neighbor] = cell;
                 }
