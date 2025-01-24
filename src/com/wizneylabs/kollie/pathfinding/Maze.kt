@@ -2,8 +2,9 @@ package com.wizneylabs.kollie.pathfinding
 
 import com.wizneylabs.kollie.math.Vector2i
 import java.util.Vector
+import kotlin.random.Random
 
-class Maze(width: Int, height: Int) {
+class Maze(width: Int, height: Int, seed: Long = 0) {
 
     private val _width = width;
     private val _height = height;
@@ -18,7 +19,10 @@ class Maze(width: Int, height: Int) {
 
     private var _hasWalkableCells = false;
 
+    private val _random = Random(seed);
+
     init {
+
         /**
          *  0 = wall cell
          *  1 = walkable cell
@@ -40,8 +44,8 @@ class Maze(width: Int, height: Int) {
 
         while (true) {
 
-            val i = (0.._height - 1).random();
-            val j = (0.._width - 1).random();
+            val i = _random.nextInt(0, _height);
+            val j = _random.nextInt(0, _width);
 
             if (isWalkable(i, j))
             {
@@ -67,7 +71,7 @@ class Maze(width: Int, height: Int) {
 
     private fun _doHorizontalDrunkenCrawl() {
 
-        var i = (0.._height - 1).random();
+        var i = _random.nextInt(0, _height);
         var j = 0;
 
         while (j < _width)
@@ -77,19 +81,19 @@ class Maze(width: Int, height: Int) {
             var deltaI: Int;
 
             do {
-                deltaI = (-1..1).random();
+                deltaI = _random.nextInt(-1, 2);
 
             } while (!isValidCell(i + deltaI, j))
 
             i += deltaI;
-            j += (0..1).random();
+            j += _random.nextInt(0, 2);
         }
     }
 
     private fun _doVerticalDrunkenCrawl() {
 
         var i = 0;
-        var j = (0.._width - 1).random();
+        var j = _random.nextInt(0, _width);
 
         while (i < _height)
         {
@@ -98,11 +102,11 @@ class Maze(width: Int, height: Int) {
             var deltaJ: Int;
 
             do {
-                deltaJ = (-1..1).random();
+                deltaJ = _random.nextInt(-1, 2);
 
             } while (!isValidCell(i, j + deltaJ))
 
-            i += (0..1).random();
+            i += _random.nextInt(0, 2);
             j += deltaJ;
         }
     }
