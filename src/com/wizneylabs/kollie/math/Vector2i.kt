@@ -4,6 +4,14 @@ import kotlin.math.abs
 
 class Vector2i {
 
+    companion object {
+
+        fun manhattanDistance(a: Vector2i, b: Vector2i): Int {
+
+            return abs(a.x - b.x) + abs(a.y - b.y);
+        }
+    }
+
     var x: Int = 0;
     var y: Int = 0;
 

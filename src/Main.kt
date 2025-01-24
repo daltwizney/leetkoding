@@ -7,8 +7,8 @@ fun mazeTest() {
     val mazeHeight = 50;
     val mazeWidth = 50;
 
-    val horizontalWalks = 15;
-    val verticalWalks = 15;
+    val horizontalWalks = 50;
+    val verticalWalks = 50;
 
     val maze = Maze(mazeWidth, mazeHeight);
     maze.generateDrunkenCrawl(horizontalWalks, verticalWalks);
@@ -16,7 +16,9 @@ fun mazeTest() {
     val startPoint = maze.getRandomWalkableCell();
     val endPoint = maze.getRandomWalkableCell();
 
-    val pathfinder: PathfinderBase = PathfinderDijkstra(maze);
+//    val pathfinder: PathfinderBase = PathfinderBFS(maze);
+//    val pathfinder: PathfinderBase = PathfinderDijkstra(maze);
+    val pathfinder: PathfinderBase = PathfinderGreedyBestFirst(maze);
 
     val path = pathfinder.computePath(startPoint, endPoint);
 
