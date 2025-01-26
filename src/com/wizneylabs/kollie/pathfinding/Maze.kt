@@ -1,6 +1,6 @@
 package com.wizneylabs.kollie.pathfinding
 
-import com.wizneylabs.kollie.math.Vector2i
+import org.joml.Vector2i
 import java.util.Vector
 import kotlin.random.Random
 

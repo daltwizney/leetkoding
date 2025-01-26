@@ -1,6 +1,7 @@
 package com.wizneylabs.kollie.pathfinding
 
-import com.wizneylabs.kollie.math.Vector2i
+import org.joml.Vector2i
+import kotlin.math.abs
 
 abstract class PathfinderBase(maze: Maze) {
 
@@ -21,6 +22,11 @@ abstract class PathfinderBase(maze: Maze) {
     protected val _frontierNodes = hashSetOf<Vector2i>();
 
     abstract fun computePath(startPoint: Vector2i, endPoint: Vector2i): List<Vector2i>;
+
+    fun manhattanDistance(a: Vector2i, b: Vector2i): Int {
+
+        return abs(a.x - b.x) + abs(a.y - b.y);
+    }
 
     fun getWalkableNeighbors(cell: Vector2i): MutableList<Vector2i> {
 

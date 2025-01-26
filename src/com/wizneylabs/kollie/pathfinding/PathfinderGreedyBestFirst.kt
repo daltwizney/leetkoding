@@ -1,6 +1,6 @@
 package com.wizneylabs.kollie.pathfinding
 
-import com.wizneylabs.kollie.math.Vector2i
+import org.joml.Vector2i
 import java.util.*
 
 class PathfinderGreedyBestFirst(maze: Maze):
@@ -50,7 +50,7 @@ class PathfinderGreedyBestFirst(maze: Maze):
                 {
                     if (!_frontierNodes.contains(neighbor))
                     {
-                        val distance = Vector2i.manhattanDistance(neighbor, endPoint);
+                        val distance = this.manhattanDistance(neighbor, endPoint);
                         frontierNodesQueue.add(Pair(neighbor, distance));
                         _frontierNodes.add(neighbor);
 

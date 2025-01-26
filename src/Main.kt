@@ -1,4 +1,4 @@
-import com.wizneylabs.kollie.math.Vector2i
+import org.joml.Vector2i
 import com.wizneylabs.kollie.pathfinding.*
 import kotlinx.coroutines.runBlocking
 
