@@ -2,6 +2,8 @@ import org.joml.Vector2i
 import com.wizneylabs.kollie.pathfinding.*
 import kotlinx.coroutines.runBlocking
 
+import playground.function_types
+
 fun mazeTest() {
 
     val mazeHeight = 50;
@@ -53,5 +55,5 @@ fun printPath(path: List<Vector2i>) {
 
 fun main() = runBlocking {
 
-    mazeTest();
+    function_types().runClassMethodTest();
 }
