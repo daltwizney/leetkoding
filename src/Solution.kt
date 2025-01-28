@@ -7,95 +7,89 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    private fun _validPathRecursive(root: Int, visited: HashSet<Int>, graph: HashMap<Int, LinkedList<Int>>, destination: Int): Boolean {
+    fun _visitConnectedNodes(root: Int, graph: HashMap<Int, ArrayList<Int>>, visited: HashSet<Int>) {
 
-        if (root == destination)
+        val stack = ArrayDeque<Int>();
+
+        stack.addLast(root);
+
+        while (stack.isNotEmpty())
         {
-            return true;
-        }
+            val node = stack.removeLast();
 
-        if (visited.contains(root))
-        {
-            return false;
-        }
+            visited.add(node);
 
-        visited.add(root);
-
-        val hasChildren = graph.containsKey(root);
-
-        var children: LinkedList<Int>? = null;
-
-        if (!hasChildren)
-        {
-            return false;
-        }
-
-        children = graph[root];
-
-        if (children!!.size == 0)
-        {
-            return false;
-        }
-
-        for (i in 0..children!!.size - 1) {
-
-            val child = children[i];
-
-            if (!visited.contains(child))
+            if (graph.containsKey(node))
             {
-                val foundPath = _validPathRecursive(child, visited, graph, destination);
+                val siblings = graph[node];
 
-                if (foundPath) {
-                    return true;
+                for (i in 0..siblings!!.size - 1)
+                {
+                    if (!visited.contains(siblings[i]))
+                    {
+                        stack.addLast(siblings[i]);
+                    }
                 }
             }
         }
-
-        return false;
     }
 
-    fun validPath(n: Int, edges: Array<IntArray>, source: Int, destination: Int): Boolean {
+    fun countComponents(n: Int, edges: Array<IntArray>): Int {
 
         if (n == 0)
         {
-            return false;
+            return 0;
         }
-        else if (source == destination)
+        else if (edges.size == 0)
         {
-            return true;
+            return n;
         }
 
         // build adjacency list
-        val graph = hashMapOf<Int, LinkedList<Int>>();
+        val graph = hashMapOf<Int, ArrayList<Int>>();
 
         for (i in 0..edges.size - 1)
         {
             val edge = edges[i];
 
-            val a = edge[0];
-            val b = edge[1];
+            val node1 = edge[0];
+            val node2 = edge[1];
 
-            if (!graph.containsKey(a))
+            if (!graph.containsKey(node1))
             {
-                graph[a] = LinkedList<Int>();
+                graph[node1] = arrayListOf<Int>();
             }
 
-            if (!graph.containsKey(b))
+            if (!graph.containsKey(node2))
             {
-                graph[b] = LinkedList<Int>();
+                graph[node2] = arrayListOf<Int>();
             }
 
-            graph[a]!!.add(b);
-            graph[b]!!.add(a);
+            graph[node1]!!.add(node2);
+            graph[node2]!!.add(node1);
         }
 
-        if (!graph.containsKey(source) || !graph.containsKey(destination))
-        {
-            return false;
-        }
-
-        // do DFS search to check if path exists
+        // iterate through keys of graph and count components
         val visited = hashSetOf<Int>();
-        return _validPathRecursive(source, visited, graph, destination);
+
+        val nodes = graph.keys.toList();
+
+        var connectedComponents = 0;
+
+        for (i in 0..nodes.size - 1)
+        {
+            val node = nodes[i];
+
+            if (!visited.contains(node))
+            {
+                _visitConnectedNodes(node, graph, visited);
+
+                connectedComponents++;
+            }
+        }
+
+        val unvisitedNodeCount = n - visited.size;
+
+        return connectedComponents + unvisitedNodeCount;
     }
 }
