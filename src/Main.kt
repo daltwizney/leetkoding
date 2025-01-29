@@ -55,5 +55,5 @@ fun printPath(path: List<Vector2i>) {
 
 fun main() = runBlocking {
 
-    function_types().runClassMethodTest();
+    mazeTest();
 }

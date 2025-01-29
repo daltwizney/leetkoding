@@ -7,89 +7,110 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun _visitConnectedNodes(root: Int, graph: HashMap<Int, ArrayList<Int>>, visited: HashSet<Int>) {
+    fun isValidCell(cell: Pair<Int, Int>, gridWidth: Int, gridHeight: Int): Boolean {
 
-        val stack = ArrayDeque<Int>();
+        return cell.first >= 0 && cell.first < gridWidth
+                && cell.second >= 0 && cell.second < gridHeight;
+    }
 
-        stack.addLast(root);
+    fun getNeighbors(cell: Pair<Int, Int>, gridWidth: Int, gridHeight: Int):
+            List<Pair<Int, Int>> {
 
-        while (stack.isNotEmpty())
+        val topNeighbor = Pair(cell.first, cell.second + 1);
+        val bottomNeighbor = Pair(cell.first, cell.second - 1);
+        val leftNeighbor = Pair(cell.first - 1, cell.second);
+        val rightNeighbor = Pair(cell.first + 1, cell.second);
+
+        val neighbors = LinkedList<Pair<Int, Int>>();
+
+        if (isValidCell(topNeighbor, gridWidth, gridHeight))
         {
-            val node = stack.removeLast();
+            neighbors.add(topNeighbor);
+        }
 
-            visited.add(node);
+        if (isValidCell(bottomNeighbor, gridWidth, gridHeight))
+        {
+            neighbors.add(bottomNeighbor);
+        }
 
-            if (graph.containsKey(node))
-            {
-                val siblings = graph[node];
+        if (isValidCell(leftNeighbor, gridWidth, gridHeight))
+        {
+            neighbors.add(leftNeighbor);
+        }
 
-                for (i in 0..siblings!!.size - 1)
+        if (isValidCell(rightNeighbor, gridWidth, gridHeight))
+        {
+            neighbors.add(rightNeighbor);
+        }
+
+        return neighbors;
+    }
+
+    fun computeIslandArea(root: Pair<Int, Int>, grid: Array<IntArray>,
+                          visited: HashSet<Pair<Int, Int>>): Int {
+
+        val gridHeight = grid.size;
+        val gridWidth = grid[0].size;
+
+        val queue = ArrayDeque<Pair<Int, Int>>();
+
+        queue.add(root);
+
+        var area = 0;
+
+        while (queue.isNotEmpty())
+        {
+            val cell = queue.removeFirst();
+
+            area++;
+            visited.add(cell);
+
+            val neighbors = getNeighbors(cell, gridWidth, gridHeight);
+
+            neighbors.forEach({ n ->
+
+                if (grid[n.first][n.second] == 1 && !visited.contains(n))
                 {
-                    if (!visited.contains(siblings[i]))
+                    visited.add(n);
+                }
+            })
+        }
+
+        return area;
+    }
+
+    fun maxAreaOfIsland(grid: Array<IntArray>): Int {
+
+        if (grid.size == 0 || grid[0].size == 0)
+        {
+            return 0;
+        }
+
+        val gridHeight = grid.size;
+        val gridWidth = grid[0].size;
+
+        var maxArea = 0;
+
+        val visited = hashSetOf<Pair<Int, Int>>();
+
+        for (i in 0..gridWidth - 1)
+        {
+            for (j in 0..gridHeight - 1)
+            {
+                val cell = Pair(i, j);
+
+                if (grid[i][j] == 1 && !visited.contains(cell))
+                {
+                    val currentIslandArea = computeIslandArea(cell, grid, visited);
+
+                    if (currentIslandArea > maxArea)
                     {
-                        stack.addLast(siblings[i]);
+                        maxArea = currentIslandArea;
                     }
                 }
             }
         }
-    }
 
-    fun countComponents(n: Int, edges: Array<IntArray>): Int {
-
-        if (n == 0)
-        {
-            return 0;
-        }
-        else if (edges.size == 0)
-        {
-            return n;
-        }
-
-        // build adjacency list
-        val graph = hashMapOf<Int, ArrayList<Int>>();
-
-        for (i in 0..edges.size - 1)
-        {
-            val edge = edges[i];
-
-            val node1 = edge[0];
-            val node2 = edge[1];
-
-            if (!graph.containsKey(node1))
-            {
-                graph[node1] = arrayListOf<Int>();
-            }
-
-            if (!graph.containsKey(node2))
-            {
-                graph[node2] = arrayListOf<Int>();
-            }
-
-            graph[node1]!!.add(node2);
-            graph[node2]!!.add(node1);
-        }
-
-        // iterate through keys of graph and count components
-        val visited = hashSetOf<Int>();
-
-        val nodes = graph.keys.toList();
-
-        var connectedComponents = 0;
-
-        for (i in 0..nodes.size - 1)
-        {
-            val node = nodes[i];
-
-            if (!visited.contains(node))
-            {
-                _visitConnectedNodes(node, graph, visited);
-
-                connectedComponents++;
-            }
-        }
-
-        val unvisitedNodeCount = n - visited.size;
-
-        return connectedComponents + unvisitedNodeCount;
+        return maxArea;
     }
 }
