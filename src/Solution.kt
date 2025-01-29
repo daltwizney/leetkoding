@@ -9,17 +9,17 @@ class Solution {
 
     fun isValidCell(cell: Pair<Int, Int>, gridWidth: Int, gridHeight: Int): Boolean {
 
-        return cell.first >= 0 && cell.first < gridWidth
-                && cell.second >= 0 && cell.second < gridHeight;
+        return cell.first >= 0 && cell.first < gridHeight
+                && cell.second >= 0 && cell.second < gridWidth;
     }
 
     fun getNeighbors(cell: Pair<Int, Int>, gridWidth: Int, gridHeight: Int):
             List<Pair<Int, Int>> {
 
-        val topNeighbor = Pair(cell.first, cell.second + 1);
-        val bottomNeighbor = Pair(cell.first, cell.second - 1);
-        val leftNeighbor = Pair(cell.first - 1, cell.second);
-        val rightNeighbor = Pair(cell.first + 1, cell.second);
+        val topNeighbor = Pair(cell.first + 1, cell.second);
+        val bottomNeighbor = Pair(cell.first - 1, cell.second);
+        val leftNeighbor = Pair(cell.first, cell.second - 1);
+        val rightNeighbor = Pair(cell.first, cell.second + 1);
 
         val neighbors = LinkedList<Pair<Int, Int>>();
 
@@ -71,6 +71,7 @@ class Solution {
 
                 if (grid[n.first][n.second] == 1 && !visited.contains(n))
                 {
+                    queue.add(n);
                     visited.add(n);
                 }
             })
@@ -93,9 +94,9 @@ class Solution {
 
         val visited = hashSetOf<Pair<Int, Int>>();
 
-        for (i in 0..gridWidth - 1)
+        for (i in 0..gridHeight - 1)
         {
-            for (j in 0..gridHeight - 1)
+            for (j in 0..gridWidth - 1)
             {
                 val cell = Pair(i, j);
 
