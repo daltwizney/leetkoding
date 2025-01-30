@@ -1,4 +1,5 @@
 import java.util.*
+import kotlin.collections.ArrayDeque
 import kotlin.math.abs
 
 class TreeNode(var `val` : Int) {
@@ -8,50 +9,49 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun closestValue(root: TreeNode?, target: Double): Int {
+    fun deepestLeavesSum(root: TreeNode?): Int {
 
         if (root == null)
         {
-            return Int.MIN_VALUE;
+            return 0;
         }
 
         val queue = ArrayDeque<TreeNode>();
 
         queue.add(root);
 
-        var closestVal = Int.MIN_VALUE;
-        var minDistance = Double.MAX_VALUE;
+        var currentLevelNodeCount = 1;
+        var nextLevelNodeCount = 0;
+
+        var currentLevelSum = 0;
 
         while (queue.isNotEmpty())
         {
-            val node = queue.removeLast();
+            currentLevelSum = 0;
 
-            val distance = abs(node.`val`.toDouble() - target);
+            for (i in 0..currentLevelNodeCount - 1)
+            {
+                val node = queue.removeFirst();
 
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closestVal = node.`val`;
-            }
-            else if (distance == minDistance)
-            {
-                if (node.`val` < closestVal)
+                currentLevelSum += node.`val`;
+
+                if (node.left != null)
                 {
-                    closestVal = node.`val`;
+                    queue.addLast(node.left!!);
+                    nextLevelNodeCount++;
+                }
+
+                if (node.right != null)
+                {
+                    queue.addLast(node.right!!);
+                    nextLevelNodeCount++;
                 }
             }
 
-            if (node.left != null)
-            {
-                queue.add(node.left!!);
-            }
-
-            if (node.right != null)
-            {
-                queue.add(node.right!!);
-            }
+            currentLevelNodeCount = nextLevelNodeCount;
+            nextLevelNodeCount = 0;
         }
 
-        return closestVal;
+        return currentLevelSum;
     }
 }
