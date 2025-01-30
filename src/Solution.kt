@@ -1,4 +1,5 @@
 import java.util.*
+import kotlin.math.abs
 
 class TreeNode(var `val` : Int) {
     var left : TreeNode? = null;
@@ -7,111 +8,50 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun isValidCell(cell: Pair<Int, Int>, gridWidth: Int, gridHeight: Int): Boolean {
+    fun closestValue(root: TreeNode?, target: Double): Int {
 
-        return cell.first >= 0 && cell.first < gridHeight
-                && cell.second >= 0 && cell.second < gridWidth;
-    }
-
-    fun getNeighbors(cell: Pair<Int, Int>, gridWidth: Int, gridHeight: Int):
-            List<Pair<Int, Int>> {
-
-        val topNeighbor = Pair(cell.first + 1, cell.second);
-        val bottomNeighbor = Pair(cell.first - 1, cell.second);
-        val leftNeighbor = Pair(cell.first, cell.second - 1);
-        val rightNeighbor = Pair(cell.first, cell.second + 1);
-
-        val neighbors = LinkedList<Pair<Int, Int>>();
-
-        if (isValidCell(topNeighbor, gridWidth, gridHeight))
+        if (root == null)
         {
-            neighbors.add(topNeighbor);
+            return Int.MIN_VALUE;
         }
 
-        if (isValidCell(bottomNeighbor, gridWidth, gridHeight))
-        {
-            neighbors.add(bottomNeighbor);
-        }
-
-        if (isValidCell(leftNeighbor, gridWidth, gridHeight))
-        {
-            neighbors.add(leftNeighbor);
-        }
-
-        if (isValidCell(rightNeighbor, gridWidth, gridHeight))
-        {
-            neighbors.add(rightNeighbor);
-        }
-
-        return neighbors;
-    }
-
-    fun computeIslandArea(root: Pair<Int, Int>, grid: Array<IntArray>,
-                          visited: HashSet<Pair<Int, Int>>): Int {
-
-        val gridHeight = grid.size;
-        val gridWidth = grid[0].size;
-
-        val queue = ArrayDeque<Pair<Int, Int>>();
+        val queue = ArrayDeque<TreeNode>();
 
         queue.add(root);
 
-        var area = 0;
+        var closestVal = Int.MIN_VALUE;
+        var minDistance = Double.MAX_VALUE;
 
         while (queue.isNotEmpty())
         {
-            val cell = queue.removeFirst();
+            val node = queue.removeLast();
 
-            area++;
-            visited.add(cell);
+            val distance = abs(node.`val`.toDouble() - target);
 
-            val neighbors = getNeighbors(cell, gridWidth, gridHeight);
-
-            neighbors.forEach({ n ->
-
-                if (grid[n.first][n.second] == 1 && !visited.contains(n))
-                {
-                    queue.add(n);
-                    visited.add(n);
-                }
-            })
-        }
-
-        return area;
-    }
-
-    fun maxAreaOfIsland(grid: Array<IntArray>): Int {
-
-        if (grid.size == 0 || grid[0].size == 0)
-        {
-            return 0;
-        }
-
-        val gridHeight = grid.size;
-        val gridWidth = grid[0].size;
-
-        var maxArea = 0;
-
-        val visited = hashSetOf<Pair<Int, Int>>();
-
-        for (i in 0..gridHeight - 1)
-        {
-            for (j in 0..gridWidth - 1)
+            if (distance < minDistance)
             {
-                val cell = Pair(i, j);
-
-                if (grid[i][j] == 1 && !visited.contains(cell))
+                minDistance = distance;
+                closestVal = node.`val`;
+            }
+            else if (distance == minDistance)
+            {
+                if (node.`val` < closestVal)
                 {
-                    val currentIslandArea = computeIslandArea(cell, grid, visited);
-
-                    if (currentIslandArea > maxArea)
-                    {
-                        maxArea = currentIslandArea;
-                    }
+                    closestVal = node.`val`;
                 }
+            }
+
+            if (node.left != null)
+            {
+                queue.add(node.left!!);
+            }
+
+            if (node.right != null)
+            {
+                queue.add(node.right!!);
             }
         }
 
-        return maxArea;
+        return closestVal;
     }
 }
