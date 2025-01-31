@@ -9,49 +9,44 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun deepestLeavesSum(root: TreeNode?): Int {
+    fun isEmptyCell(cell: Pair<Int, Int>, maze: Array<CharArray>): Boolean {
 
-        if (root == null)
-        {
-            return 0;
-        }
+        return maze[cell.first][cell.second] == '.';
+    }
 
-        val queue = ArrayDeque<TreeNode>();
+    fun isBorderCell(cell:Pair<Int, Int>, maze: Array<CharArray>): Boolean {
 
-        queue.add(root);
+        val rows = maze.size;
+        val columns = maze[0].size;
 
-        var currentLevelNodeCount = 1;
-        var nextLevelNodeCount = 0;
+        return (cell.first == 0 && (cell.second >= 0 && cell.second < columns)) &&
+                (cell.first == rows - 1 && (cell.second >= 0 && cell.second < columns)) &&
+                (cell.second == 0 && (cell.first >= 0 && cell.first < rows)) &&
+                (cell.second == columns - 1 && (cell.first >= 0 && cell.first < rows));
+    }
 
-        var currentLevelSum = 0;
+    fun isValidCell(cell: Pair<Int, Int>, maze: Array<CharArray>): Boolean {
 
-        while (queue.isNotEmpty())
-        {
-            currentLevelSum = 0;
+        val rows = maze.size;
+        val columns = maze[0].size;
 
-            for (i in 0..currentLevelNodeCount - 1)
-            {
-                val node = queue.removeFirst();
+        return (cell.first >= 0 && cell.first < rows) &&
+                (cell.second >= 0 && cell.second < columns);
+    }
 
-                currentLevelSum += node.`val`;
 
-                if (node.left != null)
-                {
-                    queue.addLast(node.left!!);
-                    nextLevelNodeCount++;
-                }
+    fun getNeighbors(cell: Pair<Int, Int>, maze: Array<CharArray>): LinkedList<Int> {
 
-                if (node.right != null)
-                {
-                    queue.addLast(node.right!!);
-                    nextLevelNodeCount++;
-                }
-            }
+        val top = Pair(cell.first + 1, cell.second);
+        val bottom = Pair(cell.first - 1, cell.second);
+        val left = Pair(cell.first, cell.second - 1);
+        val right = Pair(cell.first, cell.second + 1);
 
-            currentLevelNodeCount = nextLevelNodeCount;
-            nextLevelNodeCount = 0;
-        }
+        val neighbors = LinkedList<>
+    }
 
-        return currentLevelSum;
+    fun nearestExit(maze: Array<CharArray>, entrance: IntArray): Int {
+
+
     }
 }
