@@ -5,48 +5,41 @@ class TreeNode(var `val` : Int) {
     var right : TreeNode? = null;
 }
 
+class ListNode(var `val`: Int) {
+    var next: ListNode? = null
+}
+
 class Solution {
 
-    fun maxNumberOfBalloons(text: String): Int {
+    fun middleNode(head: ListNode?): ListNode? {
 
-        // how many of each character we need for the word balloon
-        val balloonCharacters = hashMapOf(
-            Pair('b', 1),
-            Pair('a', 1),
-            Pair('l', 2),
-            Pair('o', 2),
-            Pair('n', 1)
-        );
-
-        val balloonKeys = balloonCharacters.keys;
-
-        // build a hashmap containing total count of each character in text
-        val wordBank = hashMapOf<Char, Int>();
-
-        for (key in balloonKeys)
+        if (head == null)
         {
-            wordBank[key] = 0;
+            return null;
         }
 
-        for (i in 0..text.length - 1)
+        if (head.next == null)
         {
-            val c = text[i];
+            return head;
+        }
 
-            if (balloonKeys.contains(c))
+        var slow = head;
+        var fast = head.next;
+
+        while (fast != null)
+        {
+            slow = slow?.next;
+
+            fast = fast.next;
+
+            if (fast?.next == null)
             {
-                wordBank[c] = wordBank[c]!! + 1;
+                break;
             }
+
+            fast = fast.next;
         }
 
-        // count max number of ballons
-        val maxB = wordBank['b']!!;
-        val maxA = wordBank['a']!!;
-
-        val maxL = wordBank['l']!! / 2;
-        val maxO = wordBank['o']!! / 2;
-
-        val maxN = wordBank['n']!!;
-
-        return min(maxB, min(maxA, min(maxL, min(maxO, maxN))));
+        return slow;
     }
 }
