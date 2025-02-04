@@ -11,36 +11,21 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun deleteDuplicates(head: ListNode?): ListNode? {
+    fun _swapChars(s: CharArray, index1: Int, index2: Int) {
 
-        if (head == null)
+        val temp = s[index1];
+        s[index1] = s[index2];
+        s[index2] = temp;
+    }
+
+    fun reverseString(s: CharArray): Unit {
+
+        for (i in 0..(s.size - 1) / 2)
         {
-            return null;
+            val index1 = i;
+            val index2 = s.size - i - 1;
+
+            _swapChars(s, index1, index2);
         }
-
-        if (head.next == null)
-        {
-            return head;
-        }
-
-        var previousNode = head;
-        var currentNode = head.next;
-
-        while (currentNode != null)
-        {
-            if (currentNode.`val` == previousNode?.`val`)
-            {
-                // remove current node
-                previousNode.next = currentNode.next;
-                currentNode = previousNode.next;
-            }
-            else
-            {
-                previousNode = currentNode;
-                currentNode = currentNode?.next;
-            }
-        }
-
-        return head;
     }
 }
