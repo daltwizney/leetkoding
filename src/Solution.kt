@@ -11,7 +11,7 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun middleNode(head: ListNode?): ListNode? {
+    fun deleteDuplicates(head: ListNode?): ListNode? {
 
         if (head == null)
         {
@@ -23,23 +23,24 @@ class Solution {
             return head;
         }
 
-        var slow = head;
-        var fast = head.next;
+        var previousNode = head;
+        var currentNode = head.next;
 
-        while (fast != null)
+        while (currentNode != null)
         {
-            slow = slow?.next;
-
-            fast = fast.next;
-
-            if (fast?.next == null)
+            if (currentNode.`val` == previousNode?.`val`)
             {
-                break;
+                // remove current node
+                previousNode.next = currentNode.next;
+                currentNode = previousNode.next;
             }
-
-            fast = fast.next;
+            else
+            {
+                previousNode = currentNode;
+                currentNode = currentNode?.next;
+            }
         }
 
-        return slow;
+        return head;
     }
 }
