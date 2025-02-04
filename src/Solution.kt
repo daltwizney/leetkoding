@@ -1,6 +1,4 @@
-import java.util.*
-import kotlin.collections.ArrayDeque
-import kotlin.math.abs
+import kotlin.math.min
 
 class TreeNode(var `val` : Int) {
     var left : TreeNode? = null;
@@ -9,43 +7,46 @@ class TreeNode(var `val` : Int) {
 
 class Solution {
 
-    fun makeGood(s: String): String {
+    fun maxNumberOfBalloons(text: String): Int {
 
-        val stack = ArrayDeque<Char>();
+        // how many of each character we need for the word balloon
+        val balloonCharacters = hashMapOf(
+            Pair('b', 1),
+            Pair('a', 1),
+            Pair('l', 2),
+            Pair('o', 2),
+            Pair('n', 1)
+        );
 
-        stack.addLast(s[0]);
+        val balloonKeys = balloonCharacters.keys;
 
-        for (i in 1..s.length - 1) {
+        // build a hashmap containing total count of each character in text
+        val wordBank = hashMapOf<Char, Int>();
 
-            val c = s[i];
-
-            if (stack.isEmpty())
-            {
-                stack.addLast(c);
-                continue;
-            }
-
-            val prev = stack.last();
-
-            if ((prev.lowercaseChar() == c.lowercaseChar()) &&
-                ((prev.isUpperCase() && c.isLowerCase()) || (prev.isLowerCase() && c.isUpperCase())))
-            {
-                // drop the two letters
-                stack.removeLast();
-            }
-            else
-            {
-                stack.addLast(c);
-            }
-        }
-
-        var builder = StringBuilder();
-
-        while (!stack.isEmpty())
+        for (key in balloonKeys)
         {
-            builder.append(stack.removeFirst());
+            wordBank[key] = 0;
         }
 
-        return builder.toString();
+        for (i in 0..text.length - 1)
+        {
+            val c = text[i];
+
+            if (balloonKeys.contains(c))
+            {
+                wordBank[c] = wordBank[c]!! + 1;
+            }
+        }
+
+        // count max number of ballons
+        val maxB = wordBank['b']!!;
+        val maxA = wordBank['a']!!;
+
+        val maxL = wordBank['l']!! / 2;
+        val maxO = wordBank['o']!! / 2;
+
+        val maxN = wordBank['n']!!;
+
+        return min(maxB, min(maxA, min(maxL, min(maxO, maxN))));
     }
 }
