@@ -1,6 +1,7 @@
 import org.joml.Vector2i
 import com.wizneylabs.kollie.pathfinding.*
 import kotlinx.coroutines.runBlocking
+import playground.PathfinderBfsPractice
 
 import playground.function_types
 
@@ -21,7 +22,8 @@ fun mazeTest() {
     val startPoint = maze.getRandomWalkableCell();
     val endPoint = maze.getRandomWalkableCell();
 
-    val pathfinder: PathfinderBase = PathfinderBFS(maze);
+    val pathfinder = PathfinderBfsPractice(maze);
+//    val pathfinder: PathfinderBase = PathfinderBFS(maze);
 //    val pathfinder: PathfinderBase = PathfinderDijkstra(maze);
 //    val pathfinder: PathfinderBase = PathfinderGreedyBestFirst(maze);
 
