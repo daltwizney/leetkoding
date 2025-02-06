@@ -1,3 +1,4 @@
+import java.util.PriorityQueue
 import kotlin.math.min
 
 class TreeNode(var `val` : Int) {
@@ -11,21 +12,34 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun _swapChars(s: CharArray, index1: Int, index2: Int) {
+    fun connectSticks(sticks: IntArray): Int {
 
-        val temp = s[index1];
-        s[index1] = s[index2];
-        s[index2] = temp;
-    }
-
-    fun reverseString(s: CharArray): Unit {
-
-        for (i in 0..(s.size - 1) / 2)
+        if (sticks.size < 2)
         {
-            val index1 = i;
-            val index2 = s.size - i - 1;
-
-            _swapChars(s, index1, index2);
+            return 0;
         }
+
+        val minHeap = PriorityQueue<Int>();
+
+        for (i in 0..sticks.size - 1)
+        {
+            minHeap.add(sticks[i]);
+        }
+
+        var totalCost = 0;
+
+        while (minHeap.size > 1)
+        {
+            val a = minHeap.remove();
+            val b = minHeap.remove();
+
+            val c = a + b;
+
+            totalCost += c;
+
+            minHeap.add(c);
+        }
+
+        return totalCost;
     }
 }
