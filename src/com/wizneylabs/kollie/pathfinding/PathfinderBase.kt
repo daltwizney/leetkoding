@@ -18,6 +18,8 @@ abstract class PathfinderBase(maze: Maze) {
 
     protected var _maze = maze;
 
+    // you can update these two sets from each pathfinding implementation
+    // for visualization purposes, but not necessary...
     protected val _exploredNodes = hashSetOf<Vector2i>();
     protected val _frontierNodes = hashSetOf<Vector2i>();
 

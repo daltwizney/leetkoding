@@ -22,7 +22,11 @@ fun mazeTest() {
     val startPoint = maze.getRandomWalkableCell();
     val endPoint = maze.getRandomWalkableCell();
 
-    val pathfinder = PathfinderBfsPractice(maze);
+    /* practice implementations */
+    val pathfinder = PathfinderGreedyBestFirst(maze);
+//    val pathfinder = PathfinderBfsPractice(maze);
+
+    /* kollie implementations */
 //    val pathfinder: PathfinderBase = PathfinderBFS(maze);
 //    val pathfinder: PathfinderBase = PathfinderDijkstra(maze);
 //    val pathfinder: PathfinderBase = PathfinderGreedyBestFirst(maze);
