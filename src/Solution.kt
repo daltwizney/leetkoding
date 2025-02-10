@@ -1,3 +1,5 @@
+import kotlin.math.min
+
 class TreeNode(var `val` : Int) {
     var left : TreeNode? = null;
     var right : TreeNode? = null;
@@ -9,57 +11,33 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    private fun _isUpOneDir(word: String): Boolean {
+    fun _minDepth(root: TreeNode?): Int {
 
-        return word.length == 2 && word[0] == '.' && word[1] == '.';
-    }
-
-    private fun _isSameDir(word: String): Boolean {
-
-        return word.length == 1 && word[0] == '.';
-    }
-
-    fun simplifyPath(path: String): String {
-
-        val queue = ArrayDeque<String>();
-
-        val words = path.split('/');
-
-        for (i in 0..words.size - 1)
+        if (root == null)
         {
-            val word = words[i];
-
-            if (_isUpOneDir(word))
-            {
-                if (queue.size > 0)
-                {
-                    queue.removeLast();
-                }
-            }
-            else if (word.isEmpty())
-            {
-                // no-op
-            }
-            else if (!_isSameDir(word))
-            {
-                queue.addLast(word);
-            }
+            return Int.MAX_VALUE;
         }
 
-        val builder = StringBuilder();
+        val leftNodeDepth = _minDepth(root.left);
+        val rightNodeDepth = _minDepth(root.right);
 
-        builder.append('/');
-
-        for (i in 0..queue.size - 1)
+        if (leftNodeDepth == Int.MAX_VALUE && rightNodeDepth == Int.MAX_VALUE)
         {
-            builder.append(queue[i]);
-
-            if (i != queue.size - 1)
-            {
-                builder.append('/');
-            }
+            return 1;
         }
 
-        return builder.toString();
+        return min(leftNodeDepth, rightNodeDepth) + 1;
+    }
+
+    fun minDepth(root: TreeNode?): Int {
+
+        val depth = _minDepth(root);
+
+        if (depth == Int.MAX_VALUE)
+        {
+            return 0;
+        }
+
+        return depth;
     }
 }
