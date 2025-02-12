@@ -13,13 +13,77 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun reverseString(s: CharArray): Unit {
+    fun sortedSquares(nums: IntArray): IntArray {
 
-        for (i in 0..(s.size / 2) - 1)
+        if (nums.size == 0)
         {
-            val temp = s[i];
-            s[i] = s[s.size - 1 - i];
-            s[s.size - 1 - i] = temp;
+            return nums;
         }
+
+        if (nums.size == 1)
+        {
+            nums[0] *= nums[0];
+            return nums;
+        }
+
+        // find index of minSquareValue
+        var minSquareValue = Int.MAX_VALUE;
+        var minSquareIndex = 0;
+
+        for (i in 0..nums.size - 1)
+        {
+            val square = nums[i] * nums[i];
+
+            if (square < minSquareValue)
+            {
+                minSquareValue = square;
+                minSquareIndex = i;
+            }
+        }
+
+        // starting from minSquareIndex, compute squares in order
+        val squareArray = IntArray(nums.size);
+
+        var leftIndex = minSquareIndex;
+        var rightIndex = minSquareIndex + 1;
+
+        for (i in 0..squareArray.size - 1)
+        {
+            val canGoRight = (rightIndex < nums.size);
+            val canGoLeft = (leftIndex >= 0);
+
+            if (canGoLeft && canGoRight)
+            {
+                val leftSquare = nums[leftIndex] * nums[leftIndex];
+                val rightSquare = nums[rightIndex] * nums[rightIndex];
+
+                if (leftSquare < rightSquare)
+                {
+                    squareArray[i] = leftSquare;
+                    leftIndex--;
+                }
+                else
+                {
+                    squareArray[i] = rightSquare;
+                    rightIndex++;
+                }
+            }
+            else if (canGoLeft)
+            {
+                val leftSquare = nums[leftIndex] * nums[leftIndex];
+
+                squareArray[i] = leftSquare;
+                leftIndex--;
+            }
+            else // canGoRight
+            {
+                val rightSquare = nums[rightIndex] * nums[rightIndex];
+
+                squareArray[i] = rightSquare;
+                rightIndex++;
+            }
+        }
+
+        return squareArray;
     }
 }
