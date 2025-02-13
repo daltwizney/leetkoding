@@ -1,6 +1,5 @@
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.pow
+import java.util.*
+import kotlin.collections.ArrayDeque
 
 class TreeNode(var `val` : Int) {
     var left : TreeNode? = null;
@@ -13,77 +12,79 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun sortedSquares(nums: IntArray): IntArray {
+    fun zigzagLevelOrder(root: TreeNode?): List<List<Int>> {
 
-        if (nums.size == 0)
+        if (root == null)
         {
-            return nums;
+            return LinkedList<LinkedList<Int>>();
         }
 
-        if (nums.size == 1)
+        val queue = ArrayDeque<TreeNode?>();
+
+        queue.add(root);
+
+        var currentLevelNodeCount = 1;
+        var nextLevelNodeCount = 0;
+
+        var result = LinkedList<LinkedList<Int>>();
+
+        var zig = true;
+
+        while (queue.isNotEmpty())
         {
-            nums[0] *= nums[0];
-            return nums;
-        }
+            val currentLevelNodes = LinkedList<Int>();
 
-        // find index of minSquareValue
-        var minSquareValue = Int.MAX_VALUE;
-        var minSquareIndex = 0;
-
-        for (i in 0..nums.size - 1)
-        {
-            val square = nums[i] * nums[i];
-
-            if (square < minSquareValue)
+            if (zig)
             {
-                minSquareValue = square;
-                minSquareIndex = i;
-            }
-        }
-
-        // starting from minSquareIndex, compute squares in order
-        val squareArray = IntArray(nums.size);
-
-        var leftIndex = minSquareIndex;
-        var rightIndex = minSquareIndex + 1;
-
-        for (i in 0..squareArray.size - 1)
-        {
-            val canGoRight = (rightIndex < nums.size);
-            val canGoLeft = (leftIndex >= 0);
-
-            if (canGoLeft && canGoRight)
-            {
-                val leftSquare = nums[leftIndex] * nums[leftIndex];
-                val rightSquare = nums[rightIndex] * nums[rightIndex];
-
-                if (leftSquare < rightSquare)
+                for (i in 0..currentLevelNodeCount - 1)
                 {
-                    squareArray[i] = leftSquare;
-                    leftIndex--;
-                }
-                else
-                {
-                    squareArray[i] = rightSquare;
-                    rightIndex++;
+                    val node = queue.removeFirst()!!;
+
+                    currentLevelNodes.addLast(node.`val`);
+
+                    if (node.left != null)
+                    {
+                        queue.addLast(node.left);
+                        nextLevelNodeCount++;
+                    }
+
+                    if (node.right != null)
+                    {
+                        queue.addLast(node.right);
+                        nextLevelNodeCount++;
+                    }
                 }
             }
-            else if (canGoLeft)
+            else // zag
             {
-                val leftSquare = nums[leftIndex] * nums[leftIndex];
+                for (i in (currentLevelNodeCount - 1) downTo 0)
+                {
+                    val node = queue.removeLast()!!;
 
-                squareArray[i] = leftSquare;
-                leftIndex--;
-            }
-            else // canGoRight
-            {
-                val rightSquare = nums[rightIndex] * nums[rightIndex];
+                    currentLevelNodes.addLast(node.`val`);
 
-                squareArray[i] = rightSquare;
-                rightIndex++;
+                    if (node.right != null)
+                    {
+                        queue.addFirst(node.right);
+                        nextLevelNodeCount++;
+                    }
+
+                    if (node.left != null)
+                    {
+                        queue.addFirst(node.left);
+                        nextLevelNodeCount++;
+                    }
+                }
             }
+
+            zig = !zig;
+
+            currentLevelNodeCount = nextLevelNodeCount;
+            nextLevelNodeCount =  0;
+
+            result.addLast(currentLevelNodes);
         }
 
-        return squareArray;
+        return result;
     }
 }
