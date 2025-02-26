@@ -1,5 +1,6 @@
 import java.util.*
 import kotlin.collections.ArrayDeque
+import kotlin.math.min
 
 class TreeNode(var `val` : Int) {
     var left : TreeNode? = null;
@@ -12,79 +13,33 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun zigzagLevelOrder(root: TreeNode?): List<List<Int>> {
+    private fun _minDepth(root: TreeNode?): Int {
 
         if (root == null)
         {
-            return LinkedList<LinkedList<Int>>();
+            return Int.MAX_VALUE;
         }
 
-        val queue = ArrayDeque<TreeNode?>();
+        val leftChildMinDepth = _minDepth(root.left);
+        val rightChildMinDepth = _minDepth(root.right);
 
-        queue.add(root);
-
-        var currentLevelNodeCount = 1;
-        var nextLevelNodeCount = 0;
-
-        var result = LinkedList<LinkedList<Int>>();
-
-        var zig = true;
-
-        while (queue.isNotEmpty())
+        if (leftChildMinDepth == Int.MAX_VALUE &&
+            rightChildMinDepth == Int.MAX_VALUE)
         {
-            val currentLevelNodes = LinkedList<Int>();
-
-            if (zig)
-            {
-                for (i in 0..currentLevelNodeCount - 1)
-                {
-                    val node = queue.removeFirst()!!;
-
-                    currentLevelNodes.addLast(node.`val`);
-
-                    if (node.left != null)
-                    {
-                        queue.addLast(node.left);
-                        nextLevelNodeCount++;
-                    }
-
-                    if (node.right != null)
-                    {
-                        queue.addLast(node.right);
-                        nextLevelNodeCount++;
-                    }
-                }
-            }
-            else // zag
-            {
-                for (i in (currentLevelNodeCount - 1) downTo 0)
-                {
-                    val node = queue.removeLast()!!;
-
-                    currentLevelNodes.addLast(node.`val`);
-
-                    if (node.right != null)
-                    {
-                        queue.addFirst(node.right);
-                        nextLevelNodeCount++;
-                    }
-
-                    if (node.left != null)
-                    {
-                        queue.addFirst(node.left);
-                        nextLevelNodeCount++;
-                    }
-                }
-            }
-
-            zig = !zig;
-
-            currentLevelNodeCount = nextLevelNodeCount;
-            nextLevelNodeCount =  0;
-
-            result.addLast(currentLevelNodes);
+            // this is a leaf node
+            return 1;
         }
 
-        return result;
+        return min(leftChildMinDepth, rightChildMinDepth) + 1;
+    }
+
+    fun minDepth(root: TreeNode?): Int {
+
+        if (root == null)
+        {
+            return 0;
+        }
+
+        return _minDepth(root);
     }
 }
