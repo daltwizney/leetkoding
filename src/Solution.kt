@@ -13,52 +13,13 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun minDepth(root: TreeNode?): Int {
+    fun reverseString(s: CharArray): Unit {
 
-        if (root == null)
+        for (i in 0.. (s.size / 2) - 1)
         {
-            return 0;
+            val temp = s[i];
+            s[i] = s[s.size - 1 - i];
+            s[s.size - 1 - i] = temp;
         }
-
-        val queue = ArrayDeque<TreeNode?>();
-
-        queue.add(root);
-
-        var currentDepth = 1;
-
-        var nodesInCurrentLevel = 1;
-        var nodesInNextLevel = 0;
-
-        while (queue.isNotEmpty())
-        {
-            for (i in 0..nodesInCurrentLevel - 1)
-            {
-                val node = queue.removeFirst()!!;
-
-                if (node.left == null && node.right == null)
-                {
-                    return currentDepth;
-                }
-
-                if (node.left != null)
-                {
-                    queue.addLast(node.left);
-                    nodesInNextLevel++;
-                }
-
-                if (node.right != null)
-                {
-                    queue.addLast(node.right);
-                    nodesInNextLevel++;
-                }
-            }
-
-            nodesInCurrentLevel = nodesInNextLevel;
-            nodesInNextLevel = 0;
-
-            currentDepth++;
-        }
-
-        return 0;
     }
 }
