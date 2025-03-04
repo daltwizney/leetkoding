@@ -13,13 +13,51 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun reverseString(s: CharArray): Unit {
+    fun findWinners(matches: Array<IntArray>): List<List<Int>> {
 
-        for (i in 0.. (s.size / 2) - 1)
+        val lossCounts = hashMapOf<Int, Int>();
+
+        for (i in 0..matches.size - 1)
         {
-            val temp = s[i];
-            s[i] = s[s.size - 1 - i];
-            s[s.size - 1 - i] = temp;
+            val match = matches[i];
+            val winner = match[0];
+            val loser = match[1];
+
+            if (!lossCounts.containsKey(winner))
+            {
+                lossCounts[winner] = 0;
+            }
+
+            if (!lossCounts.containsKey(loser))
+            {
+                lossCounts[loser] = 0;
+            }
+
+            lossCounts[loser] = lossCounts[loser]!! + 1;
         }
+
+        val noLosses = mutableListOf<Int>();
+        val oneLoss = mutableListOf<Int>();
+
+        val players = lossCounts.keys.toList();
+
+        for (i in 0..players.size - 1)
+        {
+            val player = players[i];
+
+            if (lossCounts[player] == 0)
+            {
+                noLosses.add(player);
+            }
+            else if (lossCounts[player] == 1)
+            {
+                oneLoss.add(player);
+            }
+        }
+
+        noLosses.sort();
+        oneLoss.sort();
+
+        return listOf(noLosses, oneLoss);
     }
 }
