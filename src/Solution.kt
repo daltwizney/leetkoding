@@ -13,51 +13,60 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun findWinners(matches: Array<IntArray>): List<List<Int>> {
+    fun validPath(n: Int, edges: Array<IntArray>, source: Int, destination: Int): Boolean {
 
-        val lossCounts = hashMapOf<Int, Int>();
+        // build graph as adjacency list
+        val graph = hashMapOf<Int, HashSet<Int>>();
 
-        for (i in 0..matches.size - 1)
+        for (i in 0..edges.size - 1)
         {
-            val match = matches[i];
-            val winner = match[0];
-            val loser = match[1];
+            val node0 = edges[i][0];
+            val node1 = edges[i][1];
 
-            if (!lossCounts.containsKey(winner))
+            if (!graph.containsKey(node0))
             {
-                lossCounts[winner] = 0;
+                graph[node0] = hashSetOf<Int>();
             }
 
-            if (!lossCounts.containsKey(loser))
+            if (!graph.containsKey(node1))
             {
-                lossCounts[loser] = 0;
+                graph[node1] = hashSetOf<Int>();
             }
 
-            lossCounts[loser] = lossCounts[loser]!! + 1;
+            graph[node0]!!.add(node1);
+            graph[node1]!!.add(node0);
         }
 
-        val noLosses = mutableListOf<Int>();
-        val oneLoss = mutableListOf<Int>();
+        // search for path in graph using BFS
+        val queue = ArrayDeque<Int>();
 
-        val players = lossCounts.keys.toList();
+        val visited = hashSetOf<Int>();
 
-        for (i in 0..players.size - 1)
+        queue.addLast(source);
+
+        visited.add(source);
+
+        while (queue.isNotEmpty())
         {
-            val player = players[i];
+            val node = queue.removeFirst();
 
-            if (lossCounts[player] == 0)
+            if (node == destination)
             {
-                noLosses.add(player);
+                return true;
             }
-            else if (lossCounts[player] == 1)
+
+            val neighbors = graph[node]!!;
+
+            for (neighbor in neighbors)
             {
-                oneLoss.add(player);
+                if (!visited.contains(neighbor))
+                {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                }
             }
         }
 
-        noLosses.sort();
-        oneLoss.sort();
-
-        return listOf(noLosses, oneLoss);
+        return false;
     }
 }
